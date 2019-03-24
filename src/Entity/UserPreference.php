@@ -21,6 +21,18 @@ class UserPreference
      */
     private $value;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="userPreferences")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Preference", inversedBy="userPreferences")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $preference;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -34,6 +46,30 @@ class UserPreference
     public function setValue(string $value): self
     {
         $this->value = $value;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getPreference(): ?Preference
+    {
+        return $this->preference;
+    }
+
+    public function setPreference(?Preference $preference): self
+    {
+        $this->preference = $preference;
 
         return $this;
     }

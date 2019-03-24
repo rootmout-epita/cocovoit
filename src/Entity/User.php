@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -62,6 +64,28 @@ class User implements UserInterface
      * @ORM\Column(type="integer")
      */
     private $nbr_canceled_trip;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Trip", mappedBy="conductor", orphanRemoval=true)
+     */
+    private $trips;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Reservation", mappedBy="user", orphanRemoval=true)
+     */
+    private $reservations;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\UserPreference", mappedBy="user", orphanRemoval=true)
+     */
+    private $userPreferences;
+
+    public function __construct()
+    {
+        $this->trips = new ArrayCollection();
+        $this->reservations = new ArrayCollection();
+        $this->userPreferences = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -209,6 +233,99 @@ class User implements UserInterface
     public function setNbrCanceledTrip(int $nbr_canceled_trip): self
     {
         $this->nbr_canceled_trip = $nbr_canceled_trip;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Trip[]
+     */
+    public function getTrips(): Collection
+    {
+        return $this->trips;
+    }
+
+    public function addTrip(Trip $trip): self
+    {
+        if (!$this->trips->contains($trip)) {
+            $this->trips[] = $trip;
+            $trip->setConductor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTrip(Trip $trip): self
+    {
+        if ($this->trips->contains($trip)) {
+            $this->trips->removeElement($trip);
+            // set the owning side to null (unless already changed)
+            if ($trip->getConductor() === $this) {
+                $trip->setConductor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Reservation[]
+     */
+    public function getReservations(): Collection
+    {
+        return $this->reservations;
+    }
+
+    public function addReservation(Reservation $reservation): self
+    {
+        if (!$this->reservations->contains($reservation)) {
+            $this->reservations[] = $reservation;
+            $reservation->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservation(Reservation $reservation): self
+    {
+        if ($this->reservations->contains($reservation)) {
+            $this->reservations->removeElement($reservation);
+            // set the owning side to null (unless already changed)
+            if ($reservation->getUser() === $this) {
+                $reservation->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserPreference[]
+     */
+    public function getUserPreferences(): Collection
+    {
+        return $this->userPreferences;
+    }
+
+    public function addUserPreference(UserPreference $userPreference): self
+    {
+        if (!$this->userPreferences->contains($userPreference)) {
+            $this->userPreferences[] = $userPreference;
+            $userPreference->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserPreference(UserPreference $userPreference): self
+    {
+        if ($this->userPreferences->contains($userPreference)) {
+            $this->userPreferences->removeElement($userPreference);
+            // set the owning side to null (unless already changed)
+            if ($userPreference->getUser() === $this) {
+                $userPreference->setUser(null);
+            }
+        }
 
         return $this;
     }

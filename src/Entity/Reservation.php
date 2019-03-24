@@ -31,6 +31,18 @@ class Reservation
      */
     private $reservation_date;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Trip", inversedBy="reservations")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $trip;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="reservations")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -68,6 +80,30 @@ class Reservation
     public function setReservationDate(\DateTimeInterface $reservation_date): self
     {
         $this->reservation_date = $reservation_date;
+
+        return $this;
+    }
+
+    public function getTrip(): ?Trip
+    {
+        return $this->trip;
+    }
+
+    public function setTrip(?Trip $trip): self
+    {
+        $this->trip = $trip;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
