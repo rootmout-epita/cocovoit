@@ -80,11 +80,17 @@ class User implements UserInterface
      */
     private $userPreferences;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Feedback", mappedBy="author")
+     */
+    private $feedbacks;
+
     public function __construct()
     {
         $this->trips = new ArrayCollection();
         $this->reservations = new ArrayCollection();
         $this->userPreferences = new ArrayCollection();
+        $this->feedbacks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -324,6 +330,37 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($userPreference->getUser() === $this) {
                 $userPreference->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Feedback[]
+     */
+    public function getFeedbacks(): Collection
+    {
+        return $this->feedbacks;
+    }
+
+    public function addFeedback(Feedback $feedback): self
+    {
+        if (!$this->feedbacks->contains($feedback)) {
+            $this->feedbacks[] = $feedback;
+            $feedback->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFeedback(Feedback $feedback): self
+    {
+        if ($this->feedbacks->contains($feedback)) {
+            $this->feedbacks->removeElement($feedback);
+            // set the owning side to null (unless already changed)
+            if ($feedback->getAuthor() === $this) {
+                $feedback->setAuthor(null);
             }
         }
 

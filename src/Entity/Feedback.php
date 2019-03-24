@@ -26,6 +26,18 @@ class Feedback
      */
     private $note;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="feedbacks")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $author;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Trip", inversedBy="feedbacks")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $trip;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -51,6 +63,30 @@ class Feedback
     public function setNote(int $note): self
     {
         $this->note = $note;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): self
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    public function getTrip(): ?Trip
+    {
+        return $this->trip;
+    }
+
+    public function setTrip(?Trip $trip): self
+    {
+        $this->trip = $trip;
 
         return $this;
     }

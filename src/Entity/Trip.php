@@ -64,9 +64,15 @@ class Trip
      */
     private $reservations;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Feedback", mappedBy="trip", orphanRemoval=true)
+     */
+    private $feedbacks;
+
     public function __construct()
     {
         $this->reservations = new ArrayCollection();
+        $this->feedbacks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -195,6 +201,37 @@ class Trip
             // set the owning side to null (unless already changed)
             if ($reservation->getTrip() === $this) {
                 $reservation->setTrip(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Feedback[]
+     */
+    public function getFeedbacks(): Collection
+    {
+        return $this->feedbacks;
+    }
+
+    public function addFeedback(Feedback $feedback): self
+    {
+        if (!$this->feedbacks->contains($feedback)) {
+            $this->feedbacks[] = $feedback;
+            $feedback->setTrip($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFeedback(Feedback $feedback): self
+    {
+        if ($this->feedbacks->contains($feedback)) {
+            $this->feedbacks->removeElement($feedback);
+            // set the owning side to null (unless already changed)
+            if ($feedback->getTrip() === $this) {
+                $feedback->setTrip(null);
             }
         }
 
