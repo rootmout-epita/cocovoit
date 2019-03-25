@@ -15,7 +15,7 @@ class UserController extends AbstractController
     /**
      * Show the login form for connection.
      *
-     * @Route("/login" name="user.login")
+     * @Route("/login", name="user.login")
      */
     public function login()
     {
@@ -26,7 +26,7 @@ class UserController extends AbstractController
     /**
      * Logout the user, simple…
      *
-     * @Route("/logout" name="user.logout")
+     * @Route("/logout", name="user.logout")
      */
     public function logout()
     {
