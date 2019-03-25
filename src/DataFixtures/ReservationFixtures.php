@@ -18,12 +18,12 @@ class ReservationFixtures extends Fixture implements DependentFixtureInterface
 
         $custormer = $manager
             ->getRepository(User::class)
-            ->findOneBy(['firstname' => "Pierre"]);
+            ->find(1);
 
 
         $trip = $manager
             ->getRepository(Trip::class)
-            ->findOneBy(['price' => 9]);
+            ->find(4);
 
 
         /** @var User $custormer */

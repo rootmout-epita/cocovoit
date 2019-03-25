@@ -16,8 +16,7 @@ class TripFixtures extends Fixture implements DependentFixtureInterface
         // $manager->persist($product);
 
 
-        //We use the firstname because the fixture generation doesn't reset the ID index...
-        $conductor_firstname = array("Pierre", "John", "Clement", "Pierre", "Pierre", "Clement");
+        $conductor_id = array(1, 4, 3, 1, 1, 3);
         $citys = array("Lille", "Paris", "Marseille", "Lyon", "Toulouse", "Strasbourg", "Nice", "Rennes", "Lyon", "Magstatt-le-bas");
         $shedules = array("2019-03-19 09:00:00", "2019-03-23 13:30:00", "2019-03-23 17:20:00", "2019-03-29 08:00:00", "2019-03-30 09:00:00", "2019-03-30 09:45:00");
         $durations = array("02:00", "04:10", "02:30", "01:07", "5:40", "01:50");
@@ -29,8 +28,8 @@ class TripFixtures extends Fixture implements DependentFixtureInterface
         for($i = 0; $i < 6; $i++)
         {
             $trip = new Trip();
-            $trip->setDeparturePlace(array_rand($citys));
-            $trip->setArrivalPlace(array_rand($citys));
+            $trip->setDeparturePlace($citys[array_rand($citys)]);
+            $trip->setArrivalPlace($citys[array_rand($citys)]);
             $trip->setDepartureSchedule(\date_create($shedules[$i]));
             $trip->setDuration(\date_create($durations[$i]));
             $trip->setNbrPlaces($places[$i]);
@@ -40,7 +39,7 @@ class TripFixtures extends Fixture implements DependentFixtureInterface
             //Load the user object.
             $user = $manager
                 ->getRepository(User::class)
-                ->findOneBy(['firstname' => $conductor_firstname[$i]]);
+                ->find($conductor_id[$i]);
 
 
             /** @var User $user */
