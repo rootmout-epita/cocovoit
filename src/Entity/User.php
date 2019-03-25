@@ -91,6 +91,9 @@ class User implements UserInterface
         $this->reservations = new ArrayCollection();
         $this->userPreferences = new ArrayCollection();
         $this->feedbacks = new ArrayCollection();
+
+        $this->activated = true;
+        $this->nbr_canceled_trip = 0;
     }
 
     public function getId(): ?int
