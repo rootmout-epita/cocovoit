@@ -2,6 +2,10 @@
 <?php
 
 use App\Kernel;
+/* Ce code provient du projet Cocovoit mené par Pierre KELBERT pour le cours de Webavancé
+ * Il ne devrait donc pas se retrouver dans le fichier d'un autre projet...
+ * 25mars2019
+ */
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Debug\Debug;
