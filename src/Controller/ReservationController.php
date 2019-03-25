@@ -12,8 +12,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ReservationController extends AbstractController
 {
-
-
     /**
      * @Route("/new", name="reservation.new")
      */

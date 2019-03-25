@@ -13,8 +13,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class TripController extends AbstractController
 {
-
-
     /**
      * @Route("/", name="trip.list")
      *
@@ -34,14 +32,22 @@ class TripController extends AbstractController
      */
     public function view()
     {
-        //TODO
+        //TODO donne acces à toutes les informations sur le trajet.
+
+        /** Avant le trajet:
+         * on affiche le bouton reserver s'il n'a pas reserver le trajet
+         * "annuler" sinon
+         *
+         * Après le trajet:
+         * l'utilisateur peut donner son avis.
+         */
     }
 
 
     /**
-     * @Route("/edit/{id}", name="trip.edit")
+     * @Route("/add", name="trip.add")
      *
-     * Edit the trip. /!\ Only conductor can access this page !
+     * Edit the trip.
      */
     public function add()
     {
@@ -50,9 +56,9 @@ class TripController extends AbstractController
 
 
     /**
-     * @Route("/edit", name="trip.edit")
+     * @Route("/edit/{id}", name="trip.edit")
      *
-     * Edit the trip informations
+     * Edit the trip /!\ Only conductor can access this page !
      */
     public function edit()
     {

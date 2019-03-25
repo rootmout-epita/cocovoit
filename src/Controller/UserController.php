@@ -12,8 +12,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class UserController extends AbstractController
 {
-
-
     /**
      * Show the login form for connection.
      *
@@ -50,13 +48,34 @@ class UserController extends AbstractController
 
 
     /**
+     * Enable user to change his personnal informations
+     *
+     * @Route("/edit", name="user.edit")
+     */
+    public function edit()
+    {
+        //TODO
+    }
+
+
+    /** NOT USED FOR MOMENT
+     * Enable user to delete his account
+     *
+     * @Route("/edit", name="user.edit")
+     */
+    //public function edit()
+    //{
+    //}
+
+
+    /**
      * Main page of the account section. Show all reservations made by user.
      *
      * @Route("/reservations", name="user.dashboard.reservations")
      */
     public function showReservations()
     {
-        //TODO
+        //TODO retourne à la vue une liste avec toutes les reservations.
     }
 
 
@@ -66,6 +85,18 @@ class UserController extends AbstractController
      * @Route("/trips", name="user.dashboard.trips")
      */
     public function showTrips()
+    {
+        //TODO idem mais avec les trajets crées
+    }
+
+
+    /**
+     * Display the public page of the user. We can see his informations and we can see the
+     * feedback of his trips. You dont have to be logged-in.
+     *
+     * @Route("/page", name="user.public_page")
+     */
+    public function publicPage()
     {
         //TODO
     }
