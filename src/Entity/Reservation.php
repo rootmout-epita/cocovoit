@@ -17,12 +17,12 @@ class Reservation
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $reservation_key;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $ticket_path;
 
@@ -43,6 +43,19 @@ class Reservation
      */
     private $user;
 
+
+    public function __construct()
+    {
+        $this->reservation_date = date_create();
+
+        $key_to_hash = (string)time().(string)rand(0, 99999);
+        $key = hash('ripemd160', $key_to_hash);
+
+        $this->reservation_key = $key;
+
+        $this->ticket_path = substr($key, 0, 10);
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -53,36 +66,42 @@ class Reservation
         return $this->reservation_key;
     }
 
+    /*
     public function setReservationKey(string $reservation_key): self
     {
         $this->reservation_key = $reservation_key;
 
         return $this;
     }
+    */
 
     public function getTicketPath(): ?string
     {
         return $this->ticket_path;
     }
 
+    /*
     public function setTicketPath(string $ticket_path): self
     {
         $this->ticket_path = $ticket_path;
 
         return $this;
     }
+    */
 
     public function getReservationDate(): ?\DateTimeInterface
     {
         return $this->reservation_date;
     }
 
+    /*
     public function setReservationDate(\DateTimeInterface $reservation_date): self
     {
         $this->reservation_date = $reservation_date;
 
         return $this;
     }
+    */
 
     public function getTrip(): ?Trip
     {
