@@ -73,6 +73,7 @@ class Trip
     {
         $this->reservations = new ArrayCollection();
         $this->feedbacks = new ArrayCollection();
+        $this->canceled = false;
     }
 
     public function getId(): ?int
