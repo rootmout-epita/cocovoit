@@ -13,6 +13,8 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class TripController extends AbstractController
 {
+
+
     /**
      * @Route("/", name="trip.list")
      *

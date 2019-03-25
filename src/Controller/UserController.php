@@ -12,6 +12,8 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class UserController extends AbstractController
 {
+
+
     /**
      * Show the login form for connection.
      *
