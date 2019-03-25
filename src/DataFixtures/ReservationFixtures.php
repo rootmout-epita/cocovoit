@@ -14,25 +14,29 @@ class ReservationFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager)
     {
-        $reservation = new Reservation();
+        $custormers = array(2,3,5);
+        $trips = array(5,4,6);
 
-        $custormer = $manager
-            ->getRepository(User::class)
-            ->find(1);
+        for($i = 0; $i < 3; $i++) {
+            $reservation = new Reservation();
+
+            $custormer = $manager
+                ->getRepository(User::class)
+                ->find($custormers[$i]);
 
 
-        $trip = $manager
-            ->getRepository(Trip::class)
-            ->find(4);
+            $trip = $manager
+                ->getRepository(Trip::class)
+                ->find($trips[$i]);
 
 
-        /** @var User $custormer */
-        $reservation->setUser($custormer);
+            /** @var User $custormer */
+            $reservation->setUser($custormer);
+            /** @var Trip $trip */
+            $reservation->setTrip($trip);
 
-        /** @var Trip $trip */
-        $reservation->setTrip($trip);
-
-        $manager->persist($reservation);
+            $manager->persist($reservation);
+        }
 
         $manager->flush();
     }
