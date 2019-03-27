@@ -15,6 +15,7 @@ class PageController extends AbstractController
      */
     public function index()
     {
+        //TODO
         return new Response("<body>Ceci est la page d'accueil</body>");
     }
 
@@ -27,5 +28,6 @@ class PageController extends AbstractController
     public function about()
     {
         //TODO
+        return new Response("salut hugo");
     }
 }
