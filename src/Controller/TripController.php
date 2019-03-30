@@ -17,6 +17,8 @@ class TripController extends AbstractController
      * @Route("/", name="trip.list")
      *
      * Display the lattest trips.
+     *
+     * @author cldupland
      */
     public function list()
     {
@@ -29,6 +31,8 @@ class TripController extends AbstractController
      *
      * Display the trip page, all informations about are displayed.
      * If the logged user has reserved this trip, this information is displayed too.
+     *
+     * @author cldupland
      */
     public function view()
     {
@@ -41,6 +45,8 @@ class TripController extends AbstractController
          * Après le trajet:
          * l'utilisateur peut donner son avis.
          */
+
+        // Boolean pour savoir si l'utilisateur a déjà réservé.
     }
 
 
@@ -48,6 +54,8 @@ class TripController extends AbstractController
      * @Route("/add", name="trip.add")
      *
      * Edit the trip.
+     *
+     * @author cldupland
      */
     public function add()
     {
@@ -59,6 +67,8 @@ class TripController extends AbstractController
      * @Route("/edit/{id}", name="trip.edit")
      *
      * Edit the trip /!\ Only conductor can access this page !
+     *
+     * @author cldupland
      */
     public function edit()
     {
@@ -70,6 +80,8 @@ class TripController extends AbstractController
      * @Route("/delete/{id}", name="trip.delete")
      *
      * Delete the trip. /!\ Only conductor can access this page !
+     *
+     * @author cldupland
      */
     public function delete()
     {
@@ -81,6 +93,8 @@ class TripController extends AbstractController
      * @Route("/search", name="trip.search")
      *
      * Search with the condition passed at GET request.
+     *
+     * @author cldupland
      */
     public function search()
     {
