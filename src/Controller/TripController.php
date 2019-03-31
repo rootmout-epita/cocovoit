@@ -2,6 +2,10 @@
 
 namespace App\Controller;
 
+
+use App\Entity\Reservation;
+use App\Entity\Trip;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -13,28 +17,52 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class TripController extends AbstractController
 {
+    private $listTrip;
+    private $reserve;
+    private $selectedTrip;
+    private $tripRepository;
+    private $reservationRepository;
+
+//    public function __construct(PropertyRepository $repository)
+//    {
+//        $this->tripRepository = $repository;
+//    }
+
     /**
      * @Route("/", name="trip.list")
      *
      * Display the lattest trips.
      *
+     * @return Response
+     *
      * @author cldupland
      */
-    public function list()
+    public function list() : Response
     {
         //TODO
+
+        $this->tripRepository = $this->getDoctrine()->getRepository(Trip::class);
+
+        $this->listTrip = $this->tripRepository->findLatest();
+        dump($this->listTrip);
+
+        return new Response('rien');
     }
 
 
     /**
-     * @Route("/{id}", name="trip.view")
+     * @Route("/view/{id}", name="trip.view")
+     *
+     * @param int $id : id du voyage séléctionné au préalable
      *
      * Display the trip page, all informations about are displayed.
      * If the logged user has reserved this trip, this information is displayed too.
      *
+     * @return Response
+     *
      * @author cldupland
      */
-    public function view()
+    public function view(int $id) : Response
     {
         //TODO donne acces à toutes les informations sur le trajet.
 
@@ -46,7 +74,21 @@ class TripController extends AbstractController
          * l'utilisateur peut donner son avis.
          */
 
-        // Boolean pour savoir si l'utilisateur a déjà réservé.
+        $this->tripRepository = $this->getDoctrine()->getRepository(Trip::class);
+
+        $this->selectedTrip = $this->tripRepository->findOneBy(['id' => $id]);
+
+        $this->reservationRepository = $this->getDoctrine()->getRepository(Reservation::class);
+
+        $reservations = $this->reservationRepository->findReservation($id);    // Récupère la liste de passager associé au voyage
+        $this->reserve = false; // Initialise la reservation du voyage à false
+        foreach ($reservations as $row){   // Vérifie si l'utilisateur à déjà réservé le voyage
+//            if ($row['user_id'] == $user['id']){
+//                $this->reserve = true;    // Indique que l'utilisateur a déjà réservé le voyage
+//            }
+        }
+        dump($this->selectedTrip, $reservations, $this->reserve);
+        return new Response('nothing');
     }
 
 
@@ -90,14 +132,29 @@ class TripController extends AbstractController
 
 
     /**
-     * @Route("/search", name="trip.search")
+     * @Route("/search")
+     *
+     * @param string $depart : Lieu de départ du voyage
+     * @param string $arrive : Lieu d'arriver du voyage
+     * @param date $dateDepart : Date du départ du voyage
      *
      * Search with the condition passed at GET request.
      *
+     * @return Response
+     *
      * @author cldupland
      */
-    public function search()
+    public function search() : Response //$depart, $arrive, $dateDepart
     {
         //TODO
+        $this->tripRepository = $this->getDoctrine()->getRepository(Trip::class);
+
+        $depart = "Paris";
+        $arrive ="Lille";
+
+        $display = $this->tripRepository->findTrip($depart, $arrive, null);
+        dump($display);
+
+        return new Response('rien');
     }
 }

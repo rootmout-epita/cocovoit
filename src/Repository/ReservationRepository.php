@@ -19,6 +19,18 @@ class ReservationRepository extends ServiceEntityRepository
         parent::__construct($registry, Reservation::class);
     }
 
+    /**
+     * @param int $trip_id : id du voyage pour lequel on cherche les passagers
+     *
+     * @return array : Tableau des reservations pour un voyage donnée
+     */
+    public function findReservation(int $trip_id) : array {
+        return $this->createQueryBuilder('r')
+            ->where("r.trip = $trip_id")
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Reservation[] Returns an array of Reservation objects
     //  */

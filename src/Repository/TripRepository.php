@@ -19,6 +19,33 @@ class TripRepository extends ServiceEntityRepository
         parent::__construct($registry, Trip::class);
     }
 
+    /**
+     * @return array
+     */
+    public function findLatest() : array {
+        return $this->createQueryBuilder('t')
+            ->setMaxResults(10)
+            ->orderBy('t.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @param string $depart : Lieu de départ du voyage
+     * @param string $arrive : Lieu d'arrivé du voyage
+     * @param date $dateDepart : Date de départ du voyage
+     * @return array
+     */
+    public function findTrip($depart, $arrive, $dateDepart) : array {
+        return $this->createQueryBuilder('t')
+            ->where("t.departure_place = '$depart'")
+            ->andWhere("t.arrival_place = '$arrive'")
+//            ->where("t.departure_schedule = $dateDepart")
+            ->andWhere("t.nbr_places > 0")
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Trip[] Returns an array of Trip objects
     //  */
