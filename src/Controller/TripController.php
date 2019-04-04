@@ -93,6 +93,20 @@ class TripController extends AbstractController
 
 
     /**
+     * @Route("/reservation/{id}", name="trip.reservation")
+     *
+     * Creates a new reservation for the user if he does not have one.
+     * Otherwise, it is canceled.
+     *
+     */
+    public function reservation()
+    {
+        //TODO
+        //Il faut d'abord afficher un message de confirmation avant d'effectuer l'action evidemment.
+    }
+
+
+    /**
      * @Route("/add", name="trip.add")
      *
      * Edit the trip.
