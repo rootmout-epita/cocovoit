@@ -14,24 +14,6 @@ use Symfony\Component\HttpFoundation\Response;
 class ReservationController extends AbstractController
 {
     /**
-     * @Route("/new", name="reservation.new")
-     */
-    public function new()
-    {
-        //TODO
-    }
-
-
-    /**
-     * @Route("/delete", name="reservation.delete")
-     */
-    public function delete()
-    {
-        //TODO
-    }
-
-
-    /**
      * @Route("/check", name="reservation.check")
      */
     public function check()
