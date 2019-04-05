@@ -67,7 +67,7 @@ security:
                 check_path: login
 
     access_control:
-        - { path: ^/trip/, roles: ROLE_ADMIN }
+        #- { path: ^/trip/, roles: ROLE_ADMIN }
 
     encoders:
         App\Entity\User: plaintext

@@ -238,4 +238,9 @@ class Trip
 
         return $this;
     }
+
+    public function remainingPlaces():int
+    {
+        return $this->nbr_places - sizeof($this->reservations);
+    }
 }
