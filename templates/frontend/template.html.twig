@@ -2,9 +2,18 @@
 
 
 {% block content%}
-    <div class="container-fluid m-0" style="background-color: #AA3333; height: 150px">
-        <h2 class="h2">{% block page_title %}{% endblock %}</h2>
+
+    <div class="container-fluid" style="background-color: #AA3333; height: 350px; padding-left: 100px; padding-right: 100px; padding-top: 40px;">
+        <div>
+            <h2 class="h2 text-light">{% block page_title %}{% endblock %}</h2>
+        </div>
     </div>
-    {% block section %}
-    {% endblock %}
+
+    <div class="container-fluid" style="position: relative; top: -230px; padding-left: 100px; padding-right: 100px">
+        <div class="container-fluide p-4" style="background-color: #5eb5e0;">
+            {% block section %}
+            {% endblock %}
+        </div>
+    </div>
+
 {% endblock %}
