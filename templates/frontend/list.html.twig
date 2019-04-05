@@ -1,0 +1,14 @@
+{% extends "frontend/template.html.twig" %}
+
+
+{% block title %}
+    Derniers trajets {{ parent() }}
+{% endblock %}
+
+{%  block page_title %}
+    Derniers trajets
+{% endblock %}
+
+{% block section%}
+    {% include "frontend/_list_the_trip.html.twig" %}
+{% endblock %}
