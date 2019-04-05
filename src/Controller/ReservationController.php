@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ReservationController extends AbstractController
 {
     /**
+<<<<<<< HEAD
      * @Route("/new", name="reservation.new")
      *
      * Crée une nouvelle réservation si l'utilisateur est connecté.
@@ -73,6 +74,8 @@ class ReservationController extends AbstractController
 
 
     /**
+=======
+>>>>>>> 42a0362b0b16e7d08fb742ac06f179a5a4ce6ed5
      * @Route("/check", name="reservation.check")
      */
     public function check()
