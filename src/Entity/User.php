@@ -409,4 +409,13 @@ class User implements UserInterface,\Serializable
             $this->password
             ) = unserialize($serialized, ['allowed_classes' => false]);
     }
+
+    /**
+     * return the complet firstname name.
+     * @return string
+     */
+    public function getCompletName():string
+    {
+        return $this->firstname . " " . $this->lastname;
+    }
 }
