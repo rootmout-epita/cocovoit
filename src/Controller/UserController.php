@@ -6,11 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class UserController
- * @package App\Controller
- * @Route("/account")
- */
+
 class UserController extends AbstractController
 {
     /**
@@ -20,21 +16,21 @@ class UserController extends AbstractController
      */
     public function login()
     {
-        //TODO
+        return new Response('coucou');
     }
 
 
-    /**
-     * Logout the user, simple…
-     *
-     * @Route("/logout", name="user.logout")
-     */
-    public function logout()
-    {
-        //TODO
-
-        //attention, a part une simple redirection rien n'est demandé de plus. Symfony gère lui même la déconnexion.
-    }
+//    /**
+//     * Logout the user, simple…
+//     *
+//     * @Route("/logout", name="user.logout")
+//     */
+//    public function logout()
+//    {
+//        //TODO
+//
+//        //attention, a part une simple redirection rien n'est demandé de plus. Symfony gère lui même la déconnexion.
+//    }
 
 
     /**
