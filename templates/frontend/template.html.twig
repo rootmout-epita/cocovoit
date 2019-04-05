@@ -1,0 +1,10 @@
+{% extends "template.html.twig" %}
+
+
+{% block content%}
+    <div class="container-fluid m-0" style="background-color: #AA3333; height: 150px">
+        <h2 class="h2">{% block page_title %}{% endblock %}</h2>
+    </div>
+    {% block section %}
+    {% endblock %}
+{% endblock %}
