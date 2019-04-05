@@ -44,7 +44,7 @@ class TripController extends AbstractController
         $this->tripRepository = $this->getDoctrine()->getRepository(Trip::class);
 
         $this->listTrip = $this->tripRepository->findLatest();
-        dump($this->listTrip);
+        //dump($this->listTrip);
 
 
         return $this->render('frontend/list.html.twig', [
