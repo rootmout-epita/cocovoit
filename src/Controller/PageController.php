@@ -16,6 +16,8 @@ class PageController extends AbstractController
     public function index()
     {
         //TODO
+
+        return $this->render('page/home.html.twig');
         return new Response("<body>Ceci est la page d'accueil</body>");
     }
 
