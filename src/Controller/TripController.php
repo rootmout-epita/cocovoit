@@ -46,7 +46,7 @@ class TripController extends AbstractController
         $this->listTrip = $this->tripRepository->findLatest();
         dump($this->listTrip);
 
-        return new Response('rien');
+        return new Response('');
     }
 
 
@@ -88,7 +88,7 @@ class TripController extends AbstractController
 //            }
         }
         dump($this->selectedTrip, $reservations, $this->reserve);
-        return new Response('nothing');
+        return new Response('');
     }
 
 
@@ -106,15 +106,15 @@ class TripController extends AbstractController
 
 
     /**
-     * @Route("/edit/{id}", name="trip.edit")
+     * @Route("/edit/{id}/admin", name="trip.edit")
      *
      * Edit the trip /!\ Only conductor can access this page !
      *
      * @author cldupland
      */
-    public function edit()
+    public function edit() : Response
     {
-        //TODO
+        return new Response('salut');
     }
 
 
@@ -146,7 +146,6 @@ class TripController extends AbstractController
      */
     public function search() : Response //$depart, $arrive, $dateDepart
     {
-        //TODO
         $this->tripRepository = $this->getDoctrine()->getRepository(Trip::class);
 
         $depart = "Paris";
@@ -155,6 +154,6 @@ class TripController extends AbstractController
         $display = $this->tripRepository->findTrip($depart, $arrive, null);
         dump($display);
 
-        return new Response('rien');
+        return new Response('');
     }
 }
