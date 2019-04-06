@@ -132,6 +132,7 @@ class TripController extends AbstractController
      * Creates a new reservation for the user if he does not have one.
      * Otherwise, it is canceled.
      *
+     * @author hdiguardia
      */
     public function reservation(Request $request)
     {
