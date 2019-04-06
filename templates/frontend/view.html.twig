@@ -12,6 +12,13 @@
 {% block section%}
     Départ le {{ trip.getDepartureSchedule() | date("d/m/Y à H:i") }}<br/>
     Durée : {{ trip.getDuration() | date("H:i") }}
+    {% if hasReserved %}
+        <hr>
+        <h4>Ma Reservation</h4>
+        Vous avez reserévé ce trajet le {{ reservation.getReservationDate() | date("d/m/Y à H:i") }}<br>
+        <a href="#" class="btn btn-primary mt-2">Voir mon ticket</a>
+        <a href="#" class="btn btn-warning ml-2 mt-2">Annuler ma réservation</a>
+    {% endif %}
     <hr>
     <h4>À propos du conducteur</h4>
     Nom : <a href="{{ path('user.public_page', {'id' : trip.getConductor().getId()}) }}">{{ trip.getConductor().getCompletName() }}</a>
@@ -38,7 +45,10 @@
 {% block right_section %}
     <div style="font-size: 60px">{{ trip.getPrice() }}<span style="font-size: 15px; display: inline-grid">$<br/>la place</span></div>
     <hr>
-    {% if hasReserved %}
+    {% if not app.user %}
+        Vous devez être connecté pour reserver.<br/>
+        <a href="#" class="btn btn-primary mt-2">Connexion</a>
+    {% elseif hasReserved %}
         Vous avez déjà reservé ce trajet.<br/>
         <a href="#" class="btn btn-warning mt-2">Annuler ma réservation</a>
     {% elseif trip.remainingPlaces() > 0 %}
