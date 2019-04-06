@@ -105,9 +105,16 @@ class TripController extends AbstractController
         ;
         //Pierre end
 
+        if ($reservation == null){
+            return $this->render('frontend/view.html.twig', [
+                "trip" => $this->selectedTrip,
+                "hasReserved" => $this->reserve,
+                "userPreferences" => $preferences
+            ]);
+        }
         return $this->render('frontend/view.html.twig', [
             "trip" => $this->selectedTrip,
-            "reservation" => $reservations[0],
+            "reservation" => $reservation,
             "hasReserved" => $this->reserve,
             "userPreferences" => $preferences
         ]);
@@ -120,6 +127,7 @@ class TripController extends AbstractController
      * Creates a new reservation for the user if he does not have one.
      * Otherwise, it is canceled.
      *
+     * @author hdiguardia
      */
     public function reservation()
     {
@@ -173,9 +181,17 @@ class TripController extends AbstractController
      *
      * @author cldupland
      */
-    public function edit() : Response
+    public function edit(int $id) : Response
     {
-        return new Response('salut');
+        if ($this->tripRepository == null){
+            $this->tripRepository = $this->getDoctrine()->getRepository(Trip::class);
+        }
+
+        $this->selectedTrip = $this->tripRepository->findOneBy(['id' => $id]);
+
+
+
+        return new Response('');
     }
 
 
