@@ -88,6 +88,8 @@ class TripController extends AbstractController
         $this->reserve = false; // Initialise la reservation du voyage à false
         $user = $this->getUser();
 
+        $reservation = null;
+
         if ($user != null){
             foreach ($reservations as $reservation){   // Vérifie si l'utilisateur à déjà réservé le voyage
                 $reservedUser = $reservation->getUser();
@@ -105,16 +107,16 @@ class TripController extends AbstractController
         ;
         //Pierre end
 
-        if ($reservation == null){
+        if ($reservation != null){
             return $this->render('frontend/view.html.twig', [
                 "trip" => $this->selectedTrip,
+                "reservation" => $reservation,
                 "hasReserved" => $this->reserve,
                 "userPreferences" => $preferences
             ]);
         }
         return $this->render('frontend/view.html.twig', [
             "trip" => $this->selectedTrip,
-            "reservation" => $reservation,
             "hasReserved" => $this->reserve,
             "userPreferences" => $preferences
         ]);
