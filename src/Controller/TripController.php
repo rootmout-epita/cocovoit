@@ -39,12 +39,11 @@ class TripController extends AbstractController
      */
     public function list() : Response
     {
-        //TODO
-
-        $this->tripRepository = $this->getDoctrine()->getRepository(Trip::class);
+        if ($this->tripRepository == null){
+            $this->tripRepository = $this->getDoctrine()->getRepository(Trip::class);
+        }
 
         $this->listTrip = $this->tripRepository->findLatest();
-        //dump($this->listTrip);
 
 
         return $this->render('frontend/list.html.twig', [
@@ -77,7 +76,9 @@ class TripController extends AbstractController
          * l'utilisateur peut donner son avis.
          */
 
-        $this->tripRepository = $this->getDoctrine()->getRepository(Trip::class);
+        if ($this->tripRepository == null){
+            $this->tripRepository = $this->getDoctrine()->getRepository(Trip::class);
+        }
 
         $this->selectedTrip = $this->tripRepository->findOneBy(['id' => $id]);
 
@@ -85,10 +86,16 @@ class TripController extends AbstractController
 
         $reservations = $this->reservationRepository->findReservation($id);    // Récupère la liste de passager associé au voyage
         $this->reserve = false; // Initialise la reservation du voyage à false
-        foreach ($reservations as $row){   // Vérifie si l'utilisateur à déjà réservé le voyage
-//            if ($row['user_id'] == $user['id']){
-//                $this->reserve = true;    // Indique que l'utilisateur a déjà réservé le voyage
-//            }
+        $user = $this->getUser();
+
+        if ($user != null){
+            foreach ($reservations as $reservation){   // Vérifie si l'utilisateur à déjà réservé le voyage
+                $reservedUser = $reservation->getUser();
+                if ($reservedUser->getId() == $user->getId()){
+                    $this->reserve = true;    // Indique que l'utilisateur a déjà réservé le voyage
+                    break;
+                }
+            }
         }
 
         //Pierre
@@ -98,7 +105,6 @@ class TripController extends AbstractController
         ;
         //Pierre end
 
-        //dump($this->selectedTrip, $reservations, $this->reserve, $preferences);
         return $this->render('frontend/view.html.twig', [
             "trip" => $this->selectedTrip,
             "reservations" => $reservations,
@@ -129,9 +135,34 @@ class TripController extends AbstractController
      *
      * @author cldupland
      */
-    public function add()
+    public function add() : Response
     {
-        //TODO
+        if ($this->tripRepository == null){
+            $this->tripRepository = $this->getDoctrine()->getRepository(Trip::class);
+        }
+
+        $dCity = "Clermont-Ferrand";
+        $aCity = "Montpellier";
+        $shedule = "01-01-2019 19:00:00";
+        $duration = "31-12-2018 19:00:00";
+        $place = 0;
+        $price = 0;
+
+        $user = $this->getUser();
+
+        $trip = new Trip();
+        $trip->setDeparturePlace($dCity)
+            ->setArrivalPlace($aCity)
+            ->setDepartureSchedule(\date_create($shedule))
+            ->setDuration(\date_create($duration))
+            ->setNbrPlaces($place)
+            ->setPrice($price)
+            ->setConductor($user);
+        $m = $this->getDoctrine()->getManager();
+        $m->persist($trip);
+        $m->flush();
+
+        return new Response('Tous c\'est bien passé');
     }
 
 
@@ -176,8 +207,9 @@ class TripController extends AbstractController
      */
     public function search() : Response //$depart, $arrive, $dateDepart
     {
-        $this->tripRepository = $this->getDoctrine()->getRepository(Trip::class);
-
+        if ($this->tripRepository == null){
+            $this->tripRepository = $this->getDoctrine()->getRepository(Trip::class);
+        }
         $depart = "Paris";
         $arrive ="Lille";
 
