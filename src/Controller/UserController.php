@@ -92,14 +92,14 @@ class UserController extends AbstractController
 //    }
 //
 //
-//    /**
-//     * Display the public page of the user. We can see his informations and we can see the
-//     * feedback of his trips. You dont have to be logged-in.
-//     *
-//     * @Route("/page", name="user.public_page")
-//     */
-//    public function publicPage()
-//    {
-//        //TODO
-//    }
+    /**
+     * Display the public page of the user. We can see his informations and we can see the
+     * feedback of his trips. You dont have to be logged-in.
+     *
+     * @Route("/user_page/{id}", name="user.public_page")
+     */
+    public function publicPage()
+    {
+        //TODO
+    }
 }
