@@ -45,4 +45,12 @@ class ReservationController extends AbstractController
         dump($exist);
         return new Response('rien');
     }
+
+    /**
+     * @Route("/showticket/pk={pub_key}", name="reservation.showticket")
+     */
+    public function showTicket(string $pub_key)
+    {
+        return new Response($pub_key);
+    }
 }
