@@ -90,8 +90,21 @@ class TripController extends AbstractController
 //                $this->reserve = true;    // Indique que l'utilisateur a déjà réservé le voyage
 //            }
         }
-        dump($this->selectedTrip, $reservations, $this->reserve);
-        return new Response('');
+
+        //Pierre
+        $preferences = $this->selectedTrip
+            ->getConductor()
+            ->getUserPreferences()
+        ;
+        //Pierre end
+
+        //dump($this->selectedTrip, $reservations, $this->reserve, $preferences);
+        return $this->render('frontend/view.html.twig', [
+            "trip" => $this->selectedTrip,
+            "reservations" => $reservations,
+            "hasReserved" => $this->reserve,
+            "userPreferences" => $preferences
+        ]);
     }
 
 

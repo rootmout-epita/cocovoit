@@ -9,11 +9,17 @@
         </div>
     </div>
 
-    <div class="container-fluid" style="position: relative; top: -230px; padding-left: 100px; padding-right: 100px">
-        <div class="container-fluide p-4" style="background-color: #5eb5e0;">
+    <div class="container-fluid d-flex flex-row" style="position: relative; top: -230px; padding-left: 100px; padding-right: 100px">
+        <div class="container p-4 align-self-start" style="background-color: #5eb5e0;">
             {% block section %}
             {% endblock %}
         </div>
+        {% if app.request.attributes.get('_route') == "trip.view" %}
+        <div class="container p-4 w-25 ml-3 text-center align-self-start" style="background-color: #5eb5e0;">
+            {% block right_section %}
+            {% endblock %}
+        </div>
+        {% endif %}
     </div>
 
 {% endblock %}
