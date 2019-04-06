@@ -8,6 +8,8 @@ use App\Entity\Trip;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Common\Persistence\ObjectManager;
 
 
 /**
@@ -22,6 +24,16 @@ class TripController extends AbstractController
     private $selectedTrip;
     private $tripRepository;
     private $reservationRepository;
+
+    /**
+     * @var ObjectManager
+     */
+    private $em;
+
+    public function __construct(ObjectManager $em)
+    {
+        $this->em = $em;
+    }
 
 //    public function __construct(PropertyRepository $repository)
 //    {
@@ -105,10 +117,18 @@ class TripController extends AbstractController
         ;
         //Pierre end
 
+        if ($reservation == null){
+            return $this->render('frontend/view.html.twig', [
+                "trip" => $this->selectedTrip,
+                "hasReserved" => $this->reserve,
+                "userPreferences" => $preferences
+            ]);
+        }
         return $this->render('frontend/view.html.twig', [
             "trip" => $this->selectedTrip,
-            "reservation" => $reservations[0],
-            "hasReserved" => true,//$this->reserve,
+
+            "reservation" => $reservation,
+            "hasReserved" => $this->reserve,
             "userPreferences" => $preferences
         ]);
     }
@@ -120,11 +140,51 @@ class TripController extends AbstractController
      * Creates a new reservation for the user if he does not have one.
      * Otherwise, it is canceled.
      *
+     * @author hdiguardia
      */
-    public function reservation()
+    public function reservation(Request $request)
     {
         //TODO
         //Il faut d'abord afficher un message de confirmation avant d'effectuer l'action evidemment.
+        // Regarde si l'utilisateur est connecté
+        $user = $this->getUser();
+        if($user == null)
+        {
+            $this->addFlash('error', 'Veuillez vous connecter afin de réserver un voyage.');
+            return $this->redirectToRoute('trip.view');
+        }
+        else {
+            // Prend les valeurs utilisées pour vérifier les données
+            $trip_id = $request->get('id');
+            $trip = $this->getDoctrine()
+                ->getRepository(Trip::class)
+                ->findOneBy(['id' => $trip_id]);
+
+            $reservation = $this->getDoctrine()
+                ->getRepository(Reservation::class)
+                ->findOneBy(['trip' => $trip, 'user' => $user]);
+
+            // Si la réservation n'existe pas, la créer
+            if (!$reservation) {
+                $reservation = new Reservation();
+                $reservation->setTrip($trip);
+                $reservation->setUser($user);
+
+                $this->em->persist($reservation);
+                $this->em->flush();
+
+                $this->addFlash('success', 'Le voyage a bien été réservé.');
+            }
+
+            // Sinon, la supprimer
+            else {
+                $this->em->remove($reservation);
+                $this->em->flush();
+                $this->addFlash('success', 'La réservation a bien été annulée.');
+            }
+            return $this->redirectToRoute('user.dashboard.reservations');
+        }
+
     }
 
 
@@ -173,9 +233,17 @@ class TripController extends AbstractController
      *
      * @author cldupland
      */
-    public function edit() : Response
+    public function edit(int $id) : Response
     {
-        return new Response('salut');
+        if ($this->tripRepository == null){
+            $this->tripRepository = $this->getDoctrine()->getRepository(Trip::class);
+        }
+
+        $this->selectedTrip = $this->tripRepository->findOneBy(['id' => $id]);
+
+
+
+        return new Response('');
     }
 
 

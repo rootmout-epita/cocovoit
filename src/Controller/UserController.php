@@ -17,6 +17,8 @@ class UserController extends AbstractController
      * Show the login form for connection.
      *
      * @Route("/login", name="login")
+     *
+     * @author cldupland
      */
     public function login(AuthenticationUtils $authenticationUtils)
     {
@@ -33,6 +35,8 @@ class UserController extends AbstractController
      * Registration form.
      *
      * @Route("/register", name="user.registration")
+     *
+     * @author hdiguardia
      */
     public function register()
     {
@@ -44,6 +48,8 @@ class UserController extends AbstractController
      * Enable user to change his personnal informations
      *
      * @Route("/edit", name="user.edit")
+     *
+     * @author hdiguardia
      */
     public function edit()
     {
@@ -54,17 +60,22 @@ class UserController extends AbstractController
     /** NOT USED FOR MOMENT
      * Enable user to delete his account
      *
-     * @Route("/edit", name="user.edit")
+     * @Route("/edit/admin", name="user.edit")
+     *
+     * @author hdiguardia
      */
-    //public function edit()
-    //{
-    //}
+    public function editAdmin()
+    {
+
+    }
 
 
     /**
      * Main page of the account section. Show all reservations made by user.
      *
      * @Route("/reservations", name="user.dashboard.reservations")
+     *
+     * @author cldupland
      */
     public function showReservations()
     {
@@ -76,6 +87,8 @@ class UserController extends AbstractController
      * Second page of the dashboard. Show the trips created by user.
      *
      * @Route("/trips", name="user.dashboard.trips")
+     *
+     * @author cldupland
      */
     public function showTrips()
     {
@@ -92,6 +105,8 @@ class UserController extends AbstractController
      * @Route("/user_page/{id}", name="user.public_page")
      *
      * @return Reponse
+     *
+     * @author cldupland
      */
     public function publicPage(int $id) : Response
     {
@@ -101,7 +116,7 @@ class UserController extends AbstractController
 
         $user = $this->userRepository->findOneBy(['id' => $id]);
 
-        dump($user);
+//        dump($user);
 
         return new Response('');
     }
