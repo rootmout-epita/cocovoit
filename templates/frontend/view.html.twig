@@ -16,8 +16,8 @@
         <hr>
         <h4>Ma Reservation</h4>
         Vous avez reservé ce trajet le {{ reservation.getReservationDate() | date("d/m/Y à H:i") }}<br>
-        <a href="{{ path('') }}" class="btn btn-primary mt-2">Voir mon ticket</a>
-        <a href="#" class="btn btn-warning ml-2 mt-2">Annuler ma réservation</a>
+        <a href="{{ path('reservation.showticket', {'pub_key': reservation.getTicketPath()}) }}" class="btn btn-primary mt-2">Voir mon ticket</a>
+        <a href="{{ path('trip.reservation', {'id': trip.getId()}) }}" class="btn btn-warning ml-2 mt-2">Annuler ma réservation</a>
     {% endif %}
     <hr>
     <h4>À propos du conducteur</h4>
@@ -47,13 +47,13 @@
     <hr>
     {% if not app.user %}
         Vous devez être connecté pour réserver.<br/>
-        <a href="#" class="btn btn-primary mt-2">Connexion</a>
+        <a href="{{ path("login") }}" class="btn btn-primary mt-2">Connexion</a>
     {% elseif hasReserved %}
         Vous avez déjà reservé ce trajet.<br/>
-        <a href="#" class="btn btn-warning mt-2">Annuler ma réservation</a>
+        <a href="{{ path('trip.reservation', {'id': trip.getId()}) }}" class="btn btn-warning mt-2">Annuler ma réservation</a>
     {% elseif trip.remainingPlaces() > 0 %}
         Il reste des places :)
-        <a href="#" class="btn btn-primary mt-2">Réserver ce trajet</a>
+        <a href="{{ path('trip.reservation', {'id': trip.getId()}) }}" class="btn btn-primary mt-2">Réserver ce trajet</a>
     {% else %}
         <p class="text-danger">Trajet Complet</p>
     {% endif %}
