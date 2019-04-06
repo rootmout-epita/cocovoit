@@ -108,7 +108,7 @@ class TripController extends AbstractController
         return $this->render('frontend/view.html.twig', [
             "trip" => $this->selectedTrip,
             "reservation" => $reservations[0],
-            "hasReserved" => $this->reserve,
+            "hasReserved" => true,//$this->reserve,
             "userPreferences" => $preferences
         ]);
     }
