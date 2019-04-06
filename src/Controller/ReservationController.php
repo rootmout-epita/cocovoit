@@ -74,12 +74,32 @@ class ReservationController extends AbstractController
 
 
     /**
-=======
->>>>>>> 42a0362b0b16e7d08fb742ac06f179a5a4ce6ed5
-     * @Route("/check", name="reservation.check")
+     * @Route("/check/{reservation_key}", name="reservation.check")
+     *
+     * Check if the reservation key for a reservation already exists in the database or not.
+     *
+     * @param Request $request : the user's request
+     *
+     * @return Response
+     *
+     * @author hdiguardia
      */
-    public function check()
+    public function check(Request $request)
     {
         //TODO
+        $reservation_key = $request->get('reservation_key');
+        //$reservation_key = '9ac522286a381d4bdd0ded18875cf5bfcd4801ea';
+        $key = $this->getDoctrine()
+            ->getRepository(Reservation::class)
+            ->findOneBy(['reservation_key' => $reservation_key]);
+        if (!$key) {
+            $exist = false;
+        }
+        else {
+            $exist = true;
+        }
+
+        dump($exist);
+        return new Response('rien');
     }
 }
