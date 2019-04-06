@@ -15,8 +15,8 @@
     {% if hasReserved %}
         <hr>
         <h4>Ma Reservation</h4>
-        Vous avez reserévé ce trajet le {{ reservation.getReservationDate() | date("d/m/Y à H:i") }}<br>
-        <a href="#" class="btn btn-primary mt-2">Voir mon ticket</a>
+        Vous avez reservé ce trajet le {{ reservation.getReservationDate() | date("d/m/Y à H:i") }}<br>
+        <a href="{{ path('') }}" class="btn btn-primary mt-2">Voir mon ticket</a>
         <a href="#" class="btn btn-warning ml-2 mt-2">Annuler ma réservation</a>
     {% endif %}
     <hr>
