@@ -24,9 +24,10 @@ class ReservationRepository extends ServiceEntityRepository
      *
      * @return array : Tableau des reservations pour un voyage donnée
      */
-    public function findReservation(int $trip_id) : array {
+    public function findReservation(int $trip_id, int $user_id) {
         return $this->createQueryBuilder('r')
             ->where("r.trip = $trip_id")
+            ->andWhere("r.user = $user_id")
             ->getQuery()
             ->getResult();
     }
