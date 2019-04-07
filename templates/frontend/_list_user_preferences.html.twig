@@ -1,0 +1,14 @@
+<table class="table table-striped">
+    <tbody>
+
+    {% for preference in userPreferences %}
+        <tr>
+            <td scope="row">{{ preference.getPreference().getName() }}</td>
+            <td>{{ preference.getValue() }}</td>
+        </tr>
+    {% else %}
+        Ce conducteur n'a aucune préférence sur ses trajets
+    {% endfor %}
+
+    </tbody>
+</table>
