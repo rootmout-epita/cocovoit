@@ -1,0 +1,55 @@
+{% extends 'template.html.twig' %}
+
+{% block title 'Inscription' %}
+
+{% block content %}
+    <div class="container text-center">
+        <div class="jumbotron ml-auto mr-auto mt-5" style="width: 400px">
+
+            <h1>Inscription</h1>
+            <p>Rejoignez l'aventure Cocovoit !!</p>
+            <hr>
+
+            <style>
+                .form-group{
+                    margin: 0px;
+                }
+            </style>
+
+            {{ form_start(form) }}
+            <div class="container text-center">
+                <div class="m-0 p-0">
+                    {{ form_row(form.firstname, {'label': ' ','attr': {placeholder: 'Prénom'}}) }}
+                </div>
+                <div class="">
+                    {{ form_row(form.lastname, {'label': ' ','attr': {placeholder: 'Nom'}}) }}
+                </div>
+                <div class="">
+                    {{ form_row(form.email, {'label': ' ','attr': {placeholder: 'Email'}}) }}
+                    <small id="emailHelp" class="form-text text-muted text-left">Doit être unique</small>
+                </div>
+                <div class="">
+                    {{ form_row(form.phone, {'label': ' ','attr': {placeholder: 'Numéro de cellulaire', 'type':'tel'}}) }}
+                </div>
+                <div class="">
+                    {{ form_row(form.address, {'label': ' ','attr': {placeholder: 'Adresse'}}) }}
+                </div>
+                {#<div class="">
+                    {{ form_row(form.confirm_password, {'label': ' ','attr': {placeholder: 'Confirmation mot de passe'}}) }}
+                    <small id="emailHelp" class="form-text text-muted text-left">Doit être identique au mot de passe</small>
+                </div>#}
+                <div class="">
+                    {{ form_row(form.password, {'label': ' ','attr': {placeholder: 'Mot de passe'}}) }}
+                    <small id="mdpHelp" class="form-text text-muted text-left">Doit être composé d'au minimum 8 caractères</small>
+                </div>
+            </div>
+            <br/>
+            {{ form_widget(form) }}
+            <div class="row-fluid">
+                <a href="{{ path('login') }}" class="btn btn-primary">Retour</a>
+                <button type="submit" class="btn btn-success">Inscription</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

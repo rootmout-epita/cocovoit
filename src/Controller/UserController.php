@@ -59,7 +59,7 @@ class UserController extends AbstractController
             return $this->redirectToRoute('login');
         }
 
-        return $this->render('security/registration.html.twig', [
+        return $this->render('backend/security/register.html.twig', [
             'form' => $form->createView(),
         ]); // Template "registration" à créer!
 
