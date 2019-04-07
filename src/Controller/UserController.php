@@ -101,32 +101,32 @@ class UserController extends AbstractController
     /** NOT USED FOR MOMENT
      * Enable user to delete his account
      *
-     * @Route("/edit/admin", name="user.edit")
+     * @Route("/edit/admin", name="user.delete")
      *
      * @author hdiguardia
      */
-    public function editAdmin()
-    {
-        $user = $this->getUser();
-        $role = $user->getRoles();
-        $admin = false;
-        foreach ($role as $role) {
-            if ($role = 'ROLE_ADMIN') {
-                $admin = true;
-            }
-        }
-        if($admin)
-        {
-            $this->em->remove($user);
-            $this->em->flush();
-            $this->addFlash('success', 'Le compte a été supprimé avec succès.');
-        }
-        else
-        {
-            $this->addFlash('error', 'Vous ne pouvez pas supprimer ce compte.');
-        }
-        return $this->redirectToRoute('trip.view');
-    }
+//    public function delete()
+//    {
+//        $user = $this->getUser();
+//        $role = $user->getRoles();
+//        $admin = false;
+//        foreach ($role as $role) {
+//            if ($role = 'ROLE_ADMIN') {
+//                $admin = true;
+//            }
+//        }
+//        if($admin)
+//        {
+//            $this->em->remove($user);
+//            $this->em->flush();
+//            $this->addFlash('success', 'Le compte a été supprimé avec succès.');
+//        }
+//        else
+//        {
+//            $this->addFlash('error', 'Vous ne pouvez pas supprimer ce compte.');
+//        }
+//        return $this->redirectToRoute('trip.view');
+//    }
 
 
     /**
