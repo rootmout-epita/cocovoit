@@ -89,10 +89,10 @@ class UserController extends AbstractController
             $manager->flush();
 
             $this->addFlash('success', 'Votre compte à bien été modifié.');
-            return $this->redirectToRoute('user.edit');
+            return $this->redirectToRoute('user.dashboard');
         }
 
-        return $this->render('security/edit.html.twig', [
+        return $this->render('backend/user/edit.html.twig', [
             'form' => $form->createView(),
         ]);
     }

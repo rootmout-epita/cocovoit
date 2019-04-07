@@ -1,0 +1,16 @@
+{% extends "backend/template.html.twig" %}
+
+{% block title "Modifier mon compte" %}
+
+{% block page_title %}
+    Modifier mon compte
+{% endblock %}
+
+{% block section %}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <div class="row-fluid">
+    <a href="{{ path('user.dashboard') }}" class="btn btn-primary">Retour</a>
+    <button type="submit" class="btn btn-success">Valider</button>
+    {{ form_end(form) }}
+{% endblock %}
