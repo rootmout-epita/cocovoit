@@ -190,7 +190,7 @@ class TripController extends AbstractController
                 $this->em->flush();
                 $this->addFlash('success', 'La réservation a bien été annulée.');
             }
-            return $this->redirectToRoute('user.dashboard.reservations');
+            return $this->redirectToRoute('user.dashboard');
         }
 
     }
