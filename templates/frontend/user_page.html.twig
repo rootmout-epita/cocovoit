@@ -1,0 +1,27 @@
+{% extends "frontend/template.html.twig" %}
+
+
+{% block title user.getCompletName() %}
+
+{%  block page_title %}
+    {{ user.getCompletName() }}
+{% endblock %}
+
+{% block section%}
+    {% if isMe %}
+        <div class="alert alert-primary" role="alert">
+            Ceci est votre page publique tel affichée aux autres utilisateurs. <a href="{{ path('user.edit') }}" class="btn btn-link">Modifier</a>
+        </div>
+    {% endif %}
+
+    <h4 class="mb-4">Avis</h4>
+    Doesn't work for moment
+
+    <h4 class="mb-4 mt-5">À propos</h4>
+    Nombre de trajet (conducteur): {{ user.getTrips | length }}<br/>
+    Nombre de trajet (passager): {{ user.getReservations | length }}
+
+    <h4 class="mb-4 mt-5">Préférences de l'utilisateur</h4>
+    {% include "frontend/_list_user_preferences.html.twig" %}
+
+{% endblock %}

@@ -7,6 +7,7 @@ use App\Form\RegistrationFormType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -173,8 +174,12 @@ class UserController extends AbstractController
 
         $user = $this->userRepository->findOneBy(['id' => $id]);
 
-//        dump($user);
+        //dump($this->getUser()->getId());
 
-        return new Response('');
+        return $this->render('frontend/user_page.html.twig',[
+            "user" => $user,
+            "userPreferences" => $user->getUserPreferences(),
+            "isMe" => null !== $this->getUser() ? $this->getUser()->getId() : null
+        ]);
     }
 }

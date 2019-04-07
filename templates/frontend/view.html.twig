@@ -24,21 +24,7 @@
     Nom : <a href="{{ path('user.public_page', {'id' : trip.getConductor().getId()}) }}">{{ trip.getConductor().getCompletName() }}</a>
     <br><br/>
 
-    <table class="table table-striped">
-        <tbody>
-
-            {% for preference in userPreferences %}
-            <tr>
-                <td scope="row">{{ preference.getPreference().getName() }}</td>
-                <td>{{ preference.getValue() }}</td>
-            </tr>
-            {% else %}
-                Ce conducteur n'a aucune préférence sur ses trajets
-            {% endfor %}
-
-        </tbody>
-    </table>
-
+    {% include "frontend/_list_user_preferences.html.twig" %}
 
     <!-- Modal -->
     {% if app.user and not isConductor%}
