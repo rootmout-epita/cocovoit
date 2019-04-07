@@ -228,10 +228,12 @@ class TripController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->persist($trip);
             $this->em->flush();
-            return $this->redirectToRoute("trip.list");
+            return $this->redirectToRoute("user.dashboard");
         }
 
-        return $this->render('backend/trip/edit.html.twig');
+        return $this->render('backend/trip/add.html.twig', [
+            "form" => $form->createView()
+        ]);
     }
 
 
@@ -250,17 +252,18 @@ class TripController extends AbstractController
 
         $selectedTrip = $this->tripRepository->findOneBy(['id' => $id]);
 
-        dump($selectedTrip);
 
         $form = $this->createForm(TripType::class, $selectedTrip);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
             $this->em->flush();
-            return $this->redirectToRoute("trip.list");
+            return $this->redirectToRoute("user.dashboard");
         }
 
-        return $this->render('backend/trip/edit.html.twig');
+        return $this->render('backend/trip/edit.html.twig', [
+            "form" => $form->createView()
+        ]);
     }
 
 
