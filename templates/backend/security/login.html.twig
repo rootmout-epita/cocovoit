@@ -1,30 +1,34 @@
-{%  extends 'base.html.twig' %}
+{% extends 'template.html.twig' %}
 
-{% block title 'Se connecter' %}
+{% block title 'Connexion' %}
 
-{% block body %}
-
-    <div class="container nt-4">
-
-        {% if error %}
-            <div class="alert alert-danger">
-                {{ error.messageKey | trans(error.messageData, 'security') }}
+{% block content %}
+    <div class="container text-center">
+        <div class="jumbotron ml-auto mr-auto mt-5" style="width: 400px">
+            <h1>Connexion</h1>
+            <p>On se connait ?</p>
+            <hr class="my-4">
+            {% if error %}
+                <div class="alert alert-danger">
+                    {{ error.messageKey | trans(error.messageData, 'security') }}
+                </div>
+            {% endif %}
+            <div class="container text-center">
+                <form action="{{  path('login') }}" method="post">
+                    <div class="form-group">
+                        <input placeholder="Adresse E-Mail" type="text" id="username" name="_username" value="{{ last_username }}" class="form-control mb-4">
+                        <input placeholder="Mot de passe" type="password" id="password" name="_password" class="form-control mb-4">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-lg btn-block">Connexion</button>
+                    </div>
+                </form>
             </div>
-        {% endif %}
+            <p>Pas de compte ? <a href="{{ path('user.registration') }}">Inscrivez-vous</a> !</p>
+        </div>
+        <a href="{{ path('trip.list') }}" class="btn btn-primary">Accueil du site</a>
 
-        <form action="{{  path('login') }}" method="post">
-            <div class="form-group">
-                <label for="username">User email:</label>
-                <input type="text" id="username" name="_username" value="{{ last_username }}" class="form-control">
-            </div>
-
-            <div>
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="_password" class="form-control">
-            </div>
-
-            <button type="submit" class="btn btn-primary">Connect</button>
-        </form>
     </div>
 
 {% endblock %}
+
