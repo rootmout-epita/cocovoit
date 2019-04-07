@@ -226,6 +226,7 @@ class TripController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $trip->setConductor($this->getUser());
             $this->em->persist($trip);
             $this->em->flush();
             $this->addFlash('success', 'Votre voyage à bien été crée.');
