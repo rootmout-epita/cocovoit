@@ -94,7 +94,7 @@ class UserController extends AbstractController
 
         return $this->render('security/edit.html.twig', [
             'form' => $form->createView(),
-        ]); // Template "edit" à créer!
+        ]);
     }
 
 
