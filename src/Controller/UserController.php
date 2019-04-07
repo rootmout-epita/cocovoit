@@ -7,7 +7,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserController extends AbstractController
 {
@@ -38,9 +40,28 @@ class UserController extends AbstractController
      *
      * @author hdiguardia
      */
-    public function register()
-    {
-        //TODO
+    public function register(Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder) {
+
+        $user = new User();
+
+        $form = $this->createForm(RegistrationFormType::class, $user);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $hash = $encoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($hash);
+            $manager->persist($user);
+            $manager->flush();
+
+            $this->addFlash('success', 'Votre compte à bien été crée.');
+            return $this->redirectToRoute('login');
+        }
+
+        return $this->render('security/registration.html.twig', [
+            'form' => $form->createView(),
+        ]);
+
     }
 
 
