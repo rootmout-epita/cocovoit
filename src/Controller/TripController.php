@@ -185,7 +185,7 @@ class TripController extends AbstractController
                     return $this->redirectToRoute('user.dashboard');
                 }
                 else {
-                    
+
                     // Si la réservation n'existe pas, la créer
                     if (!$reservation) {
                         $reservation = new Reservation();
@@ -214,7 +214,7 @@ class TripController extends AbstractController
     /**
      * @Route("/add", name="trip.add")
      *
-     * Edit the trip.
+     * Add the trip.
      *
      * @author cldupland
      */
@@ -228,6 +228,7 @@ class TripController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->persist($trip);
             $this->em->flush();
+            $this->addFlash('success', 'Votre voyage à bien été crée.');
             return $this->redirectToRoute("user.dashboard");
         }
 
@@ -258,6 +259,7 @@ class TripController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()){
             $this->em->flush();
+            $this->addFlash('success', 'Votre compte à bien été modifié.');
             return $this->redirectToRoute("user.dashboard");
         }
 
