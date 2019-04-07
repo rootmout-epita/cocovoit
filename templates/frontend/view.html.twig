@@ -10,14 +10,16 @@
 {% endblock %}
 
 {% block section%}
-    Départ le {{ trip.getDepartureSchedule() | date("d/m/Y à H:i") }}<br/>
+    Départ le {{ trip.getDepartureSchedule() | date("d/m/Y à H:i", "America/New_York") }}<br/>
     Durée : {{ trip.getDuration() | date("H:i") }}
     {% if hasReserved %}
         <hr>
         <h4>Ma Reservation</h4>
-        Vous avez reservé ce trajet le {{ reservation.getReservationDate() | date("d/m/Y à H:i") }}<br>
+        Vous avez reservé ce trajet le {{ reservation.getReservationDate() | date("d/m/Y à H:i", "America/New_York") }}<br>
         <a href="{{ path('reservation.showticket', {'pub_key': reservation.getTicketPath()}) }}" class="btn btn-primary mt-2">Voir mon ticket</a>
-        <a href="{{ path('trip.reservation', {'id': trip.getId()}) }}" class="btn btn-warning ml-2 mt-2">Annuler ma réservation</a>
+        <button type="button" class="btn btn-warning mt-2" data-toggle="modal" data-target="#Modal">
+            Annuler la réservation
+        </button>
     {% endif %}
     <hr>
     <h4>À propos du conducteur</h4>

@@ -18,7 +18,7 @@
 
 
             <div class="flex-fill row ml-2 mr-2">
-                <div class="my-auto">Départ le : {{ trip.getDepartureSchedule() | date("d/m/Y à H:i") }}<br/>
+                <div class="my-auto">Départ le : {{ trip.getDepartureSchedule() | date("d/m/Y à H:i", "America/New_York") }}<br/>
                     Durée : {{ trip.getDuration() | date("H:i") }}<br/>
                 Conducteur : {{ trip.getConductor().getCompletName() }}</div>
             </div>
