@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Reservation;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use Symfony\Component\HttpFoundation\Response;
@@ -138,6 +139,12 @@ class UserController extends AbstractController
     public function showReservations()
     {
         //TODO retourne à la vue une liste avec toutes les reservations.
+        return $this->render('backend/list.html.twig', [
+            "reservations" => $this
+                ->getUser()
+                ->getReservations(),
+            "user" => $this->getUser()
+        ]);
     }
 
 
@@ -151,6 +158,12 @@ class UserController extends AbstractController
     public function showTrips()
     {
         //TODO idem mais avec les trajets crées
+        return $this->render('backend/list.html.twig', [
+            "trips" => $this
+                ->getUser()
+                ->getTrips(),
+            "user" => $this->getUser()
+        ]);
     }
 
 

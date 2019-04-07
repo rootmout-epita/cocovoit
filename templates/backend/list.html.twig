@@ -1,0 +1,15 @@
+{% extends 'backend/template.html.twig' %}
+
+{% block title "Mes Réservations" %}
+
+{% block section %}
+    {% if reservations is defined %}
+        <div class="container mt-4">
+            Bonjour {{ user.getCompletName() }}
+        </div>
+    {% elseif trips is defined %}
+        trip list
+    {% else %}
+        One error occured...
+    {% endif %}
+{% endblock %}
