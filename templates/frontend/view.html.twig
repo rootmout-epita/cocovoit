@@ -40,6 +40,65 @@
     </table>
 
 
+    <!-- Modal -->
+    {% if app.user %}
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+
+                        {% if hasReserved %}
+                            Annuler la réservation
+                        {% elseif trip.remainingPlaces() > 0 %}
+                            Confirmer la réservation
+                        {% endif %}
+
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {% if hasReserved %}
+                        Confirmez-vous l'annulation de votre réservation ?
+                    {% elseif trip.remainingPlaces() > 0 %}
+                    Confirmez vous la commande de votre place ?<br/>
+                    <table class="table table-striped mt-4">
+                        <tbody>
+                        <tr>
+                            <th>Tarif place</th>
+                            <td>+{{ trip.getPrice() }} $</td>
+                        </tr>
+                        <tr>
+                            <th>Frais remboursés</th>
+                            <td>-{{ trip.getPrice() }} $</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">TOTAL</th>
+                            <th scope="row">0 $</th>
+                        </tr>
+                        </tbody>
+
+                    </table>
+                    {% endif %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Non</button>
+
+                    {% if hasReserved %}
+                        <a href="{{ path('trip.reservation', {'id': trip.getId()})}}"class="btn btn-danger">Annuler</a>
+                    {% elseif trip.remainingPlaces() > 0 %}
+                        <a href="{{ path('trip.reservation', {'id': trip.getId()})}}"class="btn btn-primary">Confirmer (0$)</a>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+
 {% endblock %}
 
 {% block right_section %}
@@ -50,10 +109,14 @@
         <a href="{{ path("login") }}" class="btn btn-primary mt-2">Connexion</a>
     {% elseif hasReserved %}
         Vous avez déjà reservé ce trajet.<br/>
-        <a href="{{ path('trip.reservation', {'id': trip.getId()}) }}" class="btn btn-warning mt-2">Annuler ma réservation</a>
+        <button type="button" class="btn btn-warning mt-3" data-toggle="modal" data-target="#exampleModal">
+            Annuler la réservation
+        </button>
     {% elseif trip.remainingPlaces() > 0 %}
         Il reste des places :)
-        <a href="{{ path('trip.reservation', {'id': trip.getId()}) }}" class="btn btn-primary mt-2">Réserver ce trajet</a>
+        <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#exampleModal">
+            Réserver une place
+        </button>
     {% else %}
         <p class="text-danger">Trajet Complet</p>
     {% endif %}
