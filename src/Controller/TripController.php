@@ -259,7 +259,7 @@ class TripController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()){
             $this->em->flush();
-            $this->addFlash('success', 'Votre compte à bien été modifié.');
+            $this->addFlash('success', 'Votre voyage à bien été modifié.');
             return $this->redirectToRoute("user.dashboard");
         }
 
