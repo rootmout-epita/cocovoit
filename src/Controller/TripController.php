@@ -159,7 +159,7 @@ class TripController extends AbstractController
         if($user == null)
         {
             $this->addFlash('error', 'Veuillez vous connecter afin de réserver un voyage.');
-            return $this->redirectToRoute('trip.view');
+            return $this->redirectToRoute('user.dashboard');
         }
         else {
             // Prend les valeurs utilisées pour vérifier les données
@@ -172,25 +172,41 @@ class TripController extends AbstractController
                 ->getRepository(Reservation::class)
                 ->findOneBy(['trip' => $trip, 'user' => $user]);
 
-            // Si la réservation n'existe pas, la créer
-            if (!$reservation) {
-                $reservation = new Reservation();
-                $reservation->setTrip($trip);
-                $reservation->setUser($user);
-
-                $this->em->persist($reservation);
-                $this->em->flush();
-
-                $this->addFlash('success', 'Le voyage a bien été réservé.');
+            // Vérifie si l'utilisateur essaye de réserver son propre trajet
+            if ($trip->getConductor() == $user) {
+                $this->addFlash('error', 'Vous ne pouvez pas réserver votre propre trajet.');
+                return $this->redirectToRoute('user.dashboard');
             }
-
-            // Sinon, la supprimer
             else {
-                $this->em->remove($reservation);
-                $this->em->flush();
-                $this->addFlash('success', 'La réservation a bien été annulée.');
+
+                // Vérifie si l'utilisateur essaye de réserver un trajet complet
+                if ($trip->remainingPlaces() == 0) {
+                    $this->addFlash('error', 'Vous ne pouvez pas réserver un trajet déjà complet.');
+                    return $this->redirectToRoute('user.dashboard');
+                }
+                else {
+                    
+                    // Si la réservation n'existe pas, la créer
+                    if (!$reservation) {
+                        $reservation = new Reservation();
+                        $reservation->setTrip($trip);
+                        $reservation->setUser($user);
+
+                        $this->em->persist($reservation);
+                        $this->em->flush();
+
+                        $this->addFlash('success', 'Le voyage a bien été réservé.');
+                    }
+
+                    // Sinon, la supprimer
+                    else {
+                        $this->em->remove($reservation);
+                        $this->em->flush();
+                        $this->addFlash('success', 'La réservation a bien été annulée.');
+                    }
+                    return $this->redirectToRoute('user.dashboard');
+                }
             }
-            return $this->redirectToRoute('user.dashboard');
         }
 
     }
