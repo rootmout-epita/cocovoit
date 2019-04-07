@@ -48,7 +48,10 @@
                                 <a href="{{ path('trip.view', {'id': reservation.getTrip().getId()}) }}" class="btn btn-secondary">Détails</a>
                                 <a href="{{path('reservation.showticket', {'pub_key': reservation.getTicketPath()}) }}" class="btn btn-primary">Voir le ticket</a>
                                 |
-                                <a href="" class="btn btn-warning">Annuler la reservation</a>
+                                <form method="post" onsubmit="return confirm('Confirmez-vous l\'annulation ?')" action="{{ path('trip.reservation', {'id': reservation.getTrip().getId()}) }}" style="display: inline-block">
+                                    <button class="btn btn-warning">Annuler la reservation</button>
+                                </form>
+
                             </div>
 
 
@@ -88,7 +91,9 @@
                                 <a href="{{ path('trip.view', {'id': trip.getId()}) }}" class="btn btn-primary">Voir</a>
                                 <a href="{{ path('trip.edit', {'id': trip.getId()}) }}" class="btn btn-secondary">Modifier</a>
                                 |
-                                <a href="{{ path('trip.delete', {'id': trip.getId()}) }}" class="btn btn-danger">Supprimer</a>
+                                <form method="post" onsubmit="return confirm('Confirmez-vous la suppression ?')" action="{{ path('trip.delete', {'id': trip.getId()}) }}" style="display: inline-block">
+                                    <button class="btn btn-danger">Supprimer</button>
+                                </form>
                             </div>
 
 
