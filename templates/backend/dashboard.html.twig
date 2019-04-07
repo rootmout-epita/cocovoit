@@ -3,7 +3,6 @@
 {% block title "Mes Réservations" %}
 
 {% block section %}
-    {% if reservations is defined %}
         <div class="container mt-4">
             <h3 class="mb-4 mt-5">Bonjour {{ user.getCompletName() }}</h3>
 
@@ -32,16 +31,81 @@
         </nav>
         <div class="tab-content" id="nav-tabContent">
             <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                liste des réservations
+
+                {% for reservation in reservations %}
+                    <div class="card border-secondary mt-4" style="">
+                        <div class="card-header d-flex">
+
+
+                            <div class="align-self-center h5 m-0">
+                            {{ reservation.getTrip().getDeparturePlace() }}
+                            &nbsp;<i class="fas fa-arrow-circle-right"></i>&nbsp;
+                            {{ reservation.getTrip().getArrivalPlace() }}
+                            </div>
+                            
+                            <div class="align-self-center m-0 ml-5 h5">{{ reservation.getTrip().getDepartureSchedule() | date("d/m/Y H:i", "America/New_York")}}</div>
+
+                            <div class="ml-auto">
+                                <a href="{{ path('trip.view', {'id': reservation.getTrip().getId()}) }}" class="btn btn-secondary">Détails</a>
+                                <a href="{{path('reservation.showticket', {'pub_key': reservation.getTicketPath()}) }}" class="btn btn-primary">Voir le ticket</a>
+                                |
+                                <a href="" class="btn btn-warning">Annuler la reservation</a>
+                            </div>
+
+
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">
+                                Reservation effectuée le {{ reservation.getReservationDate() | date("d/m/Y à H:i", "America/New_York")}}<br>
+                                Conducteur: {{ reservation.getTrip().getConductor().getCompletName() }}
+                            </p>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="text-center mt-4">
+                    Vous n'avez effectué aucune réservation. <a href="{{ path('trip.list') }}" class="btn btn-link">Commencez par ici</a>
+                    </div>
+                {% endfor %}
             </div>
             <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                liste des trajets
+
+                {% for trip in trips %}
+                    <div class="card border-secondary mt-4" style="">
+                        <div class="card-header d-flex">
+
+
+                            <div class="align-self-center h5 m-0">
+                                {{ trip.getDeparturePlace() }}
+                                &nbsp;<i class="fas fa-arrow-circle-right"></i>&nbsp;
+                                {{ trip.getArrivalPlace() }}
+                            </div>
+
+                            <div class="align-self-center m-0 ml-5 h5">{{ trip.getDepartureSchedule() | date("d/m/Y H:i", "America/New_York")}}</div>
+
+                            <div class="ml-auto">
+                                <a href="{{ path('trip.edit', {'id': trip.getId()}) }}" class="btn btn-secondary">Modifier</a>
+                                |
+                                <a href="{{ path('trip.delete', {'id': trip.getId()}) }}" class="btn btn-danger">Supprimer</a>
+                            </div>
+
+
+                        </div>
+                        <div class="card-body">
+                            {#<p class="card-text">
+                                Reservation effectuée le {{ reservation.getReservationDate() | date("d/m/Y à H:i", "America/New_York")}}<br>
+                                Conducteur: {{ reservation.getTrip().getConductor().getCompletName() }}
+                            </p>#}
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="text-center mt-4">
+                        Vous n'avez pas crée de trajet, utilisez le bouton ci-dessus pour commencer ;)</a>
+                    </div>
+                {% endfor %}
+
+
+
             </div>
         </div>
         </div>
-    {% elseif trips is defined %}
-        trip list
-    {% else %}
-        One error occured...
-    {% endif %}
 {% endblock %}

@@ -144,6 +144,9 @@ class UserController extends AbstractController
             "reservations" => $this
                 ->getUser()
                 ->getReservations(),
+            "trips" => $this
+                ->getUser()
+                ->getTrips(),
             "user" => $this->getUser()
         ]);
     }
