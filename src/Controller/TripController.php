@@ -185,7 +185,7 @@ class TripController extends AbstractController
                     return $this->redirectToRoute('user.dashboard');
                 }
                 else {
-                    
+
                     // Si la réservation n'existe pas, la créer
                     if (!$reservation) {
                         $reservation = new Reservation();
@@ -214,7 +214,7 @@ class TripController extends AbstractController
     /**
      * @Route("/add", name="trip.add")
      *
-     * Edit the trip.
+     * Add the trip.
      *
      * @author cldupland
      */
