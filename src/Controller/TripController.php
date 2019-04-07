@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Entity\Reservation;
 use App\Entity\Trip;
+use App\Form\TripType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,9 +20,6 @@ use Doctrine\Common\Persistence\ObjectManager;
  */
 class TripController extends AbstractController
 {
-    private $listTrip;
-    private $reserve;
-    private $selectedTrip;
     private $tripRepository;
     private $reservationRepository;
 
@@ -55,11 +53,11 @@ class TripController extends AbstractController
             $this->tripRepository = $this->getDoctrine()->getRepository(Trip::class);
         }
 
-        $this->listTrip = $this->tripRepository->findLatest();
+        $listTrip = $this->tripRepository->findLatest();
 
 
         return $this->render('frontend/list.html.twig', [
-            "trips" => $this->listTrip
+            "trips" => $listTrip
         ]);
     }
 
@@ -92,44 +90,52 @@ class TripController extends AbstractController
             $this->tripRepository = $this->getDoctrine()->getRepository(Trip::class);
         }
 
-        $this->selectedTrip = $this->tripRepository->findOneBy(['id' => $id]);
+        $selectedTrip = $this->tripRepository->findOneBy(['id' => $id]);
 
         $this->reservationRepository = $this->getDoctrine()->getRepository(Reservation::class);
 
-        $reservations = $this->reservationRepository->findReservation($id);    // Récupère la liste de passager associé au voyage
-        $this->reserve = false; // Initialise la reservation du voyage à false
         $user = $this->getUser();
 
-        $reservation = null;
+        $preferences = $selectedTrip
+            ->getConductor()
+            ->getUserPreferences();
 
         if ($user != null){
-            foreach ($reservations as $reservation){   // Vérifie si l'utilisateur à déjà réservé le voyage
-                $reservedUser = $reservation->getUser();
-                if ($reservedUser->getId() == $user->getId()){
-                    $this->reserve = true;    // Indique que l'utilisateur a déjà réservé le voyage
-                    break;
-                }
+
+            $reservation = $this->reservationRepository->findReservation($id, $user->getId());    // Récupère la liste de passager associé au voyage
+
+            $isConductor = false;
+
+            if ($selectedTrip->getConductor() == $user){
+                $isConductor = true;
+            }
+
+            if ($reservation == []){
+                $reserve = false;
+                return $this->render('frontend/view.html.twig', [
+                    "trip" => $selectedTrip,
+                    "hasReserved" => $reserve,
+                    "userPreferences" => $preferences,
+                    "isConductor" => $isConductor
+                ]);
+            }
+            else{
+                $reserve = true;
+                return $this->render('frontend/view.html.twig', [
+                    "trip" => $selectedTrip,
+                    "reservation" => $reservation[0],
+                    "hasReserved" => $reserve,
+                    "userPreferences" => $preferences,
+                    "isConductor" => $isConductor
+                ]);
             }
         }
 
-        //Pierre
-        $preferences = $this->selectedTrip
-            ->getConductor()
-            ->getUserPreferences()
-        ;
-        //Pierre end
+        $reserve = false;
 
-        if ($reservation != null){
-            return $this->render('frontend/view.html.twig', [
-                "trip" => $this->selectedTrip,
-                "reservation" => $reservation,
-                "hasReserved" => $this->reserve,
-                "userPreferences" => $preferences
-            ]);
-        }
         return $this->render('frontend/view.html.twig', [
-            "trip" => $this->selectedTrip,
-            "hasReserved" => $this->reserve,
+            "trip" => $selectedTrip,
+            "hasReserved" => $reserve,
             "userPreferences" => $preferences
         ]);
     }
@@ -189,6 +195,43 @@ class TripController extends AbstractController
     }
 
 
+//    /**
+//     * @Route("/add", name="trip.add")
+//     *
+//     * Edit the trip.
+//     *
+//     * @author cldupland
+//     */
+//    public function add() : Response
+//    {
+//        if ($this->tripRepository == null){
+//            $this->tripRepository = $this->getDoctrine()->getRepository(Trip::class);
+//        }
+//
+//        $dCity = "Clermont-Ferrand";
+//        $aCity = "Montpellier";
+//        $shedule = "01-01-2019 19:00:00";
+//        $duration = "31-12-2018 19:00:00";
+//        $place = 0;
+//        $price = 0;
+//
+//        $user = $this->getUser();
+//
+//        $trip = new Trip();
+//        $trip->setDeparturePlace($dCity)
+//            ->setArrivalPlace($aCity)
+//            ->setDepartureSchedule(\date_create($shedule))
+//            ->setDuration(\date_create($duration))
+//            ->setNbrPlaces($place)
+//            ->setPrice($price)
+//            ->setConductor($user);
+//        $m = $this->getDoctrine()->getManager();
+//        $m->persist($trip);
+//        $m->flush();
+//
+//        return new Response('Tous c\'est bien passé');
+//    }
+
     /**
      * @Route("/add", name="trip.add")
      *
@@ -196,34 +239,20 @@ class TripController extends AbstractController
      *
      * @author cldupland
      */
-    public function add() : Response
+    public function add(Request $request)
     {
-        if ($this->tripRepository == null){
-            $this->tripRepository = $this->getDoctrine()->getRepository(Trip::class);
+        $trip = new Trip();
+        $form = $this->createForm(TripType::class, $trip);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->persist($trip);
+            $this->em->flush();
+            return $this->redirectToRoute("trip.list");
         }
 
-        $dCity = "Clermont-Ferrand";
-        $aCity = "Montpellier";
-        $shedule = "01-01-2019 19:00:00";
-        $duration = "31-12-2018 19:00:00";
-        $place = 0;
-        $price = 0;
-
-        $user = $this->getUser();
-
-        $trip = new Trip();
-        $trip->setDeparturePlace($dCity)
-            ->setArrivalPlace($aCity)
-            ->setDepartureSchedule(\date_create($shedule))
-            ->setDuration(\date_create($duration))
-            ->setNbrPlaces($place)
-            ->setPrice($price)
-            ->setConductor($user);
-        $m = $this->getDoctrine()->getManager();
-        $m->persist($trip);
-        $m->flush();
-
-        return new Response('Tous c\'est bien passé');
+        return $this->render('backend/trip/edit.html.twig');
     }
 
 
@@ -234,17 +263,25 @@ class TripController extends AbstractController
      *
      * @author cldupland
      */
-    public function edit(int $id) : Response
+    public function edit(int $id, Request $request) : Response
     {
         if ($this->tripRepository == null){
             $this->tripRepository = $this->getDoctrine()->getRepository(Trip::class);
         }
 
-        $this->selectedTrip = $this->tripRepository->findOneBy(['id' => $id]);
+        $selectedTrip = $this->tripRepository->findOneBy(['id' => $id]);
 
+        dump($selectedTrip);
 
+        $form = $this->createForm(TripType::class, $selectedTrip);
+        $form->handleRequest($request);
 
-        return new Response('');
+        if ($form->isSubmitted() && $form->isValid()){
+            $this->em->flush();
+            return $this->redirectToRoute("trip.list");
+        }
+
+        return $this->render('backend/trip/edit.html.twig');
     }
 
 
@@ -255,9 +292,20 @@ class TripController extends AbstractController
      *
      * @author cldupland
      */
-    public function delete()
+    public function delete(int $id)
     {
-        //TODO
+        if ($this->tripRepository == null){
+            $this->tripRepository = $this->getDoctrine()->getRepository(Trip::class);
+        }
+
+        $selectedTrip = $this->tripRepository->findOneBy(['id' => $id]);
+
+        dump($selectedTrip);
+
+        $this->em->remove($selectedTrip);
+        $this->em->flush();
+
+        return $this->redirectToRoute("trip.list");
     }
 
 
