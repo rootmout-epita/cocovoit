@@ -16,10 +16,8 @@ class TripType extends AbstractType
             ->add('arrival_place')
             ->add('departure_schedule')
             ->add('duration')
-            ->add('canceled')
             ->add('nbr_places')
             ->add('price')
-            ->add('conductor')
         ;
     }
 
