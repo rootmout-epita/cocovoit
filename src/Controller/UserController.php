@@ -130,38 +130,20 @@ class UserController extends AbstractController
 
 
     /**
-     * Main page of the account section. Show all reservations made by user.
+     * Main page of the account section. Show all reservations and trips.
      *
-     * @Route("/reservations", name="user.dashboard.reservations")
+     * @Route("/dashboard", name="user.dashboard")
      *
      * @author cldupland
      */
-    public function showReservations()
+    public function dashboard()
     {
         //TODO retourne à la vue une liste avec toutes les reservations.
-        return $this->render('backend/list.html.twig', [
+
+        return $this->render('backend/dashboard.html.twig', [
             "reservations" => $this
                 ->getUser()
                 ->getReservations(),
-            "user" => $this->getUser()
-        ]);
-    }
-
-
-    /**
-     * Second page of the dashboard. Show the trips created by user.
-     *
-     * @Route("/trips", name="user.dashboard.trips")
-     *
-     * @author cldupland
-     */
-    public function showTrips()
-    {
-        //TODO idem mais avec les trajets crées
-        return $this->render('backend/list.html.twig', [
-            "trips" => $this
-                ->getUser()
-                ->getTrips(),
             "user" => $this->getUser()
         ]);
     }
