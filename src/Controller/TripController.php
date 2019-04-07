@@ -194,44 +194,6 @@ class TripController extends AbstractController
 
     }
 
-
-//    /**
-//     * @Route("/add", name="trip.add")
-//     *
-//     * Edit the trip.
-//     *
-//     * @author cldupland
-//     */
-//    public function add() : Response
-//    {
-//        if ($this->tripRepository == null){
-//            $this->tripRepository = $this->getDoctrine()->getRepository(Trip::class);
-//        }
-//
-//        $dCity = "Clermont-Ferrand";
-//        $aCity = "Montpellier";
-//        $shedule = "01-01-2019 19:00:00";
-//        $duration = "31-12-2018 19:00:00";
-//        $place = 0;
-//        $price = 0;
-//
-//        $user = $this->getUser();
-//
-//        $trip = new Trip();
-//        $trip->setDeparturePlace($dCity)
-//            ->setArrivalPlace($aCity)
-//            ->setDepartureSchedule(\date_create($shedule))
-//            ->setDuration(\date_create($duration))
-//            ->setNbrPlaces($place)
-//            ->setPrice($price)
-//            ->setConductor($user);
-//        $m = $this->getDoctrine()->getManager();
-//        $m->persist($trip);
-//        $m->flush();
-//
-//        return new Response('Tous c\'est bien passé');
-//    }
-
     /**
      * @Route("/add", name="trip.add")
      *
