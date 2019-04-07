@@ -1,5 +1,10 @@
 {% extends "template.html.twig" %}
 
+{% block navbar_right %}
+    <div>Bonjour {{ app.user.getFirstname() }}</div>
+    <a href="{{ path('user.edit') }}" class="btn btn-primary ml-3">Modifier mon compte</a>
+    <a href="{{ path('logout') }}" class="btn btn-secondary ml-3">Déconnexion</a>
+{% endblock %}
 
 {% block content%}
 
