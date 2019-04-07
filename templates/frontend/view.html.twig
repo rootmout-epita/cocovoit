@@ -95,6 +95,7 @@
     {% if isConductor %}
         Voici comment votre page apparait aux yeux des autres utilisateurs<br/>
         <a href="{{ path('trip.edit', {'id': trip.getId()}) }}" class="btn btn-primary mt-3">Modifier ce trajet</a>
+        <a href="{{ path('user.dashboard') }}" class="btn btn-secondary mt-3">Retour à la liste</a>
     {% elseif hasReserved %}
         Vous avez déjà reservé ce trajet.<br/>
         <button type="button" class="btn btn-warning mt-3" data-toggle="modal" data-target="#Modal">
