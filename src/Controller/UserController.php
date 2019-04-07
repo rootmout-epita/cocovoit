@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\RegistrationFormType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -60,7 +61,7 @@ class UserController extends AbstractController
 
         return $this->render('security/registration.html.twig', [
             'form' => $form->createView(),
-        ]);
+        ]); // Template "registration" à créer!
 
     }
 
@@ -72,9 +73,26 @@ class UserController extends AbstractController
      *
      * @author hdiguardia
      */
-    public function edit()
+    public function edit(Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder)
     {
-        //TODO
+        //TODO : Ne s'occupe pas encore des préférences utilisateurs!
+        $user = $this->getUser();
+        $form = $this->createForm(RegistrationFormType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $hash = $encoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($hash);
+            $manager->flush();
+
+            $this->addFlash('success', 'Votre compte à bien été modifié.');
+            return $this->redirectToRoute('user.edit');
+        }
+
+        return $this->render('security/edit.html.twig', [
+            'form' => $form->createView(),
+        ]); // Template "edit" à créer!
     }
 
 
@@ -87,7 +105,25 @@ class UserController extends AbstractController
      */
     public function editAdmin()
     {
-
+        $user = $this->getUser();
+        $role = $user->getRoles();
+        $admin = false;
+        foreach ($role as $role) {
+            if ($role = 'ROLE_ADMIN') {
+                $admin = true;
+            }
+        }
+        if($admin)
+        {
+            $this->em->remove($user);
+            $this->em->flush();
+            $this->addFlash('success', 'Le compte a été supprimé avec succès.');
+        }
+        else
+        {
+            $this->addFlash('error', 'Vous ne pouvez pas supprimer ce compte.');
+        }
+        return $this->redirectToRoute('trip.view');
     }
 
 
