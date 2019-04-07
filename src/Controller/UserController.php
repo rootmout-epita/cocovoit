@@ -174,7 +174,7 @@ class UserController extends AbstractController
         return $this->render('frontend/user_page.html.twig',[
             "user" => $user,
             "userPreferences" => $user->getUserPreferences(),
-            "isMe" => null !== $this->getUser() ? $this->getUser()->getId() : null
+            "isMe" => null !== $this->getUser() ? $this->getUser()->getId() == $user->getId() : false
         ]);
     }
 }
