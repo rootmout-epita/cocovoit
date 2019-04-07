@@ -2,9 +2,11 @@
 
 {% block title "Mes Réservations" %}
 
+{% block page_title %}Bonjour {{ user.getCompletName() }}{% endblock %}
+
 {% block section %}
-        <div class="container mt-4">
-            <h3 class="mb-4 mt-5">Bonjour {{ user.getCompletName() }}</h3>
+
+
 
             {% for message in app.flashes('success') %}
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -150,6 +152,5 @@
 
 
             </div>
-        </div>
         </div>
 {% endblock %}
