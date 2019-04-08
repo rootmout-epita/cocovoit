@@ -243,4 +243,9 @@ class Trip
     {
         return $this->nbr_places - sizeof($this->reservations);
     }
+
+    public function hasReservation():bool
+    {
+        return sizeof($this->reservations) != 0;
+    }
 }

@@ -271,7 +271,7 @@ class TripController extends AbstractController
             $trip->setConductor($this->getUser());
             $this->em->persist($trip);
             $this->em->flush();
-            $this->addFlash('success', 'Votre voyage à bien été crée.');
+            $this->addFlash('success', 'Votre trajet à bien été crée.');
             return $this->redirectToRoute("user.dashboard");
         }
 
@@ -302,7 +302,7 @@ class TripController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()){
             $this->em->flush();
-            $this->addFlash('success', 'Votre voyage à bien été modifié.');
+            $this->addFlash('success', 'Votre trajet à bien été modifié.');
             return $this->redirectToRoute("user.dashboard");
         }
 
@@ -333,6 +333,26 @@ class TripController extends AbstractController
         $this->em->flush();
 
         return $this->redirectToRoute("trip.list");
+    }
+
+    /**
+     * @Route("/cancel/{id}", name="trip.cancel")
+     */
+    public function cancel(int $id)
+    {
+        $this
+            ->getDoctrine()
+            ->getRepository(Trip::class)
+            ->findOneBy(["id" => $id, "conductor" => $this->getUser()->getId()])
+            ->setCanceled(true);
+
+        $this->getUser()->newCanceledTrip();
+
+        $this->em->flush();
+        $this->addFlash('success', 'Votre trajet à bien été annulé.');
+
+        return $this->redirectToRoute("user.dashboard");
+
     }
 
 

@@ -35,20 +35,31 @@
             <div class="tab-pane fade  show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
 
                 {% for reservation in reservations %}
+                    {% if reservation.getTrip().getCanceled() %}
+                    <div class="card border-danger mt-4" style="">
+                    {% else %}
                     <div class="card border-secondary mt-4" style="">
+                    {% endif %}
                         <div class="card-header d-flex">
 
+                            {% if reservation.getTrip().getCanceled() %}
+                            <div class="align-self-center h5 m-0 text-danger" style="min-width: 160px">
+                            {% else %}
                             <div class="align-self-center h5 m-0" style="min-width: 160px">
+                                {% endif %}
                             {{ reservation.getTrip().getDeparturePlace() }}
                             &nbsp;<i class="fas fa-arrow-circle-right"></i>&nbsp;
                             {{ reservation.getTrip().getArrivalPlace() }}
+                                {% if reservation.getTrip().getCanceled() %}
+                                    <span class="badge badge-danger ml-2">ANNULÉ</span>
+                                {% endif %}
                             </div>
                             
                             <div class="align-self-center m-0 ml-5 h5">{{ reservation.getTrip().getDepartureSchedule() | date("d/m/Y H:i", "America/New_York")}}</div>
 
                             <div class="ml-auto">
                                 <a href="{{ path('trip.view', {'id': reservation.getTrip().getId()}) }}" class="btn btn-secondary">Détails</a>
-                                <a href="{{path('reservation.showticket', {'pub_key': reservation.getTicketPath()}) }}" class="btn btn-primary">Voir le ticket</a>
+                                <a href="{{path('reservation.showticket', {'pub_key': reservation.getTicketPath()}) }}" class="btn btn-primary" target="_blank">Voir le ticket</a>
                                 |
                                 <form method="post" onsubmit="return confirm('Confirmez-vous l\'annulation ?')" action="{{ path('trip.reservation', {'id': reservation.getTrip().getId()}) }}" style="display: inline-block">
                                     <button class="btn btn-warning">Annuler la reservation</button>
@@ -71,31 +82,49 @@
                     </div>
                 {% endfor %}
             </div>
+
+
+
+
             <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                 <div class="d-flex justify-content-between mt-4">
                     <div class="align-self-center">La liste des trajets dont vous êtes le conducteur:</div>
                     <a href="{{ path('trip.add') }}" class="btn btn-primary">Créer un nouveau trajet</a>
                 </div>
                 {% for trip in trips %}
-                    <div class="card border-secondary mt-4" style="">
+                    {% if trip.getCanceled() %}
+                    <div class="card border-danger mt-4" style="">
+                    {% else %}
+                        <div class="card border-secondary mt-4" style="">
+
+                        {% endif %}
                         <div class="card-header d-flex">
 
 
-                            <div class="align-self-center h5 m-0" style="min-width: 160px">
+                            <div class="align-self-center {% if trip.getCanceled() %}text-danger{% endif %} h5 m-0" style="min-width: 160px">
                                 {{ trip.getDeparturePlace() }}
                                 &nbsp;<i class="fas fa-arrow-circle-right"></i>&nbsp;
                                 {{ trip.getArrivalPlace() }}
+                                {% if trip.getCanceled() %}
+                                    <span class="badge badge-danger ml-3">ANNULÉ</span>
+                                {% endif %}
                             </div>
 
                             <div class="align-self-center m-0 ml-5 h5">{{ trip.getDepartureSchedule() | date("d/m/Y H:i", "America/New_York")}}</div>
 
                             <div class="ml-auto">
-                                <a href="{{ path('trip.view', {'id': trip.getId()}) }}" class="btn btn-primary">Voir</a>
-                                <a href="{{ path('trip.edit', {'id': trip.getId()}) }}" class="btn btn-secondary">Modifier</a>
+                                <a href="{{ path('trip.view', {'id': trip.getId()}) }}" class="btn btn-primary {% if trip.getCanceled() %}disabled{% endif %}">Voir</a>
+                                <a href="{{ path('trip.edit', {'id': trip.getId()}) }}" class="btn btn-secondary {% if trip.getCanceled() %}disabled{% endif %}">Modifier</a>
                                 |
-                                <form method="post" onsubmit="return confirm('Confirmez-vous la suppression ?')" action="{{ path('trip.delete', {'id': trip.getId()}) }}" style="display: inline-block">
-                                    <button class="btn btn-danger">Supprimer</button>
-                                </form>
+                                {% if trip.hasReservation() %}
+                                    <form method="post" onsubmit="return confirm('Confirmez-vous l\'annulation ? Cette action est irréversible !')" action="{{ path('trip.cancel', {'id': trip.getId()}) }}" style="display: inline-block">
+                                        <button class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Un trajet comportant des reservation ne peut être supprimé" style="width: 170px" {% if trip.getCanceled() %}disabled{% endif %}>Annuler le trajet</button>
+                                    </form>
+                                {% else %}
+                                    <form method="post" onsubmit="return confirm('Confirmez-vous la suppression ?')" action="{{ path('trip.delete', {'id': trip.getId()}) }}" style="display: inline-block">
+                                        <button class="btn btn-danger" style="width: 170px">Supprimer</button>
+                                    </form>
+                                {% endif %}
                             </div>
 
 
