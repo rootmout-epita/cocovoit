@@ -51,6 +51,6 @@ class ReservationController extends AbstractController
      */
     public function showTicket(string $pub_key)
     {
-        return new Response($pub_key);
+        return $this->render('ticket.pdf.twig');
     }
 }
