@@ -35,11 +35,6 @@ class TripController extends AbstractController
         $this->em = $em;
     }
 
-//    public function __construct(PropertyRepository $repository)
-//    {
-//        $this->tripRepository = $repository;
-//    }
-
     /**
      * @Route("/", name="trip.list")
      *
@@ -67,7 +62,7 @@ class TripController extends AbstractController
     /**
      * @Route("/view/{id}", name="trip.view")
      *
-     * @param int $id : id du voyage séléctionné au préalable
+     * @param int $id : id of the trip that has been selected
      *
      * Display the trip page, all informations about are displayed.
      * If the logged user has reserved this trip, this information is displayed too.
@@ -78,14 +73,11 @@ class TripController extends AbstractController
      */
     public function view(int $id) : Response
     {
-        //TODO donne acces à toutes les informations sur le trajet.
-
-        /** Avant le trajet:
-         * on affiche le bouton reserver s'il n'a pas reserver le trajet
-         * "annuler" sinon
+        /** Before the trip :
+         * display the "book" button if the user hasn't booked the trip yet
          *
-         * Après le trajet:
-         * l'utilisateur peut donner son avis.
+         * After the trip :
+         * the user can give his feedback
          */
 
         if ($this->tripRepository == null){
@@ -150,14 +142,16 @@ class TripController extends AbstractController
      * Creates a new reservation for the user if he does not have one.
      * Otherwise, it is canceled.
      *
+     * @param Request $request : the request sent by the user
+     *
+     * @return Response
+     *
      * @author hdiguardia
      * @throws \Dompdf\Exception
      */
     public function reservation(Request $request)
     {
-        //TODO
-        //Il faut d'abord afficher un message de confirmation avant d'effectuer l'action evidemment.
-        // Regarde si l'utilisateur est connecté
+        // Check if the user is connected
         $user = $this->getUser();
         if($user == null)
         {
@@ -165,7 +159,7 @@ class TripController extends AbstractController
             return $this->redirectToRoute('user.dashboard');
         }
         else {
-            // Prend les valeurs utilisées pour vérifier les données
+            // Get the values used to check the data in the database
             $trip_id = $request->get('id');
             $trip = $this->getDoctrine()
                 ->getRepository(Trip::class)
@@ -175,21 +169,21 @@ class TripController extends AbstractController
                 ->getRepository(Reservation::class)
                 ->findOneBy(['trip' => $trip, 'user' => $user]);
 
-            // Vérifie si l'utilisateur essaye de réserver son propre trajet
+            // Check if the user is trying to book his own trip
             if ($trip->getConductor() == $user) {
                 $this->addFlash('error', 'Vous ne pouvez pas réserver votre propre trajet.');
                 return $this->redirectToRoute('user.dashboard');
             }
             else {
 
-                // Vérifie si l'utilisateur essaye de réserver un trajet complet
+                // Check if the user is trying to book a trip already full
                 if ($trip->remainingPlaces() == 0) {
                     $this->addFlash('error', 'Vous ne pouvez pas réserver un trajet déjà complet.');
                     return $this->redirectToRoute('user.dashboard');
                 }
                 else {
 
-                    // Si la réservation n'existe pas, la créer
+                    // If the reservation doesn't exist, create it
                     if (!$reservation) {
                         $reservation = new Reservation();
                         $reservation->setTrip($trip);
@@ -200,7 +194,7 @@ class TripController extends AbstractController
 
                         $this->addFlash('success', 'Le voyage a bien été réservé.');
 
-                        //IMPOSSIBLE DE FAIRE MARCHER CETTE MERDE
+                        // THIS CODE SECTION DOESN'T WORK
 //                        //PDF SECTION
 //                        // Configure Dompdf according to your needs
 //                        $pdfOptions = new Options();
@@ -239,14 +233,13 @@ class TripController extends AbstractController
 //                        //END PDF
                     }
 
-                    // Sinon, la supprimer
+                    // Otherwise, delete it
                     else {
                         $this->em->remove($reservation);
                         $this->em->flush();
                         $this->addFlash('success', 'La réservation a bien été annulée.');
                     }
                     return $this->redirectToRoute('user.dashboard');
-                    //return new Response("hehe");
                 }
             }
         }
@@ -257,6 +250,10 @@ class TripController extends AbstractController
      * @Route("/add", name="trip.add")
      *
      * Add the trip.
+     *
+     * @param Request $request : the request sent by the user
+     *
+     * @return  Response
      *
      * @author cldupland
      */
@@ -285,6 +282,12 @@ class TripController extends AbstractController
      * @Route("/edit/{id}/admin", name="trip.edit")
      *
      * Edit the trip /!\ Only conductor can access this page !
+     *
+     * @param int $id : the id of the trip
+     *
+     * @param Request $request : the request sent by the user
+     *
+     * @return Response
      *
      * @author cldupland
      */
@@ -317,6 +320,10 @@ class TripController extends AbstractController
      *
      * Delete the trip. /!\ Only conductor can access this page !
      *
+     * @param int $id : the id of the trip to delete
+     *
+     * @return Response
+     *
      * @author cldupland
      */
     public function delete(int $id)
@@ -337,6 +344,14 @@ class TripController extends AbstractController
 
     /**
      * @Route("/cancel/{id}", name="trip.cancel")
+     *
+     * Cancel a trip.
+     *
+     * @param int $id : the id of the trip to delete
+     *
+     * @return Response
+     *
+     * @author pkelbert
      */
     public function cancel(int $id)
     {
@@ -359,9 +374,7 @@ class TripController extends AbstractController
     /**
      * @Route("/search", name="trip.search")
      *
-     * @param string $depart : Lieu de départ du voyage
-     * @param string $arrive : Lieu d'arriver du voyage
-     * @param date $dateDepart : Date du départ du voyage
+     * @param Request $request : the request sent by the user
      *
      * Search with the condition passed at GET request.
      *
