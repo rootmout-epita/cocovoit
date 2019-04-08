@@ -129,4 +129,5 @@
 sync_git.php
 
 .idea/php.xml
+composer.lock
 symfony.lock
