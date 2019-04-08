@@ -51,6 +51,15 @@ class ReservationController extends AbstractController
      */
     public function showTicket(string $pub_key)
     {
-        return $this->render('ticket.pdf.twig');
+        $reservation = $this
+            ->getDoctrine()
+            ->getRepository(Reservation::class)
+            ->findOneBy(["ticket_path" => $pub_key]);
+
+        $default_path = "http://lab.kelbert.fr/reservation/check/";
+
+        return $this->render('ticket.pdf.twig',[
+            "key" => $default_path . $reservation->getReservationKey()
+        ]);
     }
 }

@@ -6,6 +6,8 @@ namespace App\Controller;
 use App\Entity\Reservation;
 use App\Entity\Trip;
 use App\Form\TripType;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -149,6 +151,7 @@ class TripController extends AbstractController
      * Otherwise, it is canceled.
      *
      * @author hdiguardia
+     * @throws \Dompdf\Exception
      */
     public function reservation(Request $request)
     {
@@ -196,6 +199,44 @@ class TripController extends AbstractController
                         $this->em->flush();
 
                         $this->addFlash('success', 'Le voyage a bien été réservé.');
+
+                        //IMPOSSIBLE DE FAIRE MARCHER CETTE MERDE
+//                        //PDF SECTION
+//                        // Configure Dompdf according to your needs
+//                        $pdfOptions = new Options();
+//                        $pdfOptions->set('isRemoteEnabled',true);
+//
+//                        // Instantiate Dompdf with our options
+//                        $dompdf = new Dompdf($pdfOptions);
+//
+//
+//                        // Retrieve the HTML generated in our twig file
+//                        $html = $this->renderView('ticket.pdf.twig', [
+//                            'title' => "Welcome to our PDF Test"
+//                        ]);
+//
+//                        // Load HTML to Dompdf
+//                        $dompdf->loadHtml($html);
+//                        dump($html);
+//
+//                        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+//                        //$dompdf->setPaper('A4', 'portrait');
+//
+//                        // Render the HTML as PDF
+//                        $dompdf->render();
+//
+//                        // Store PDF Binary Data
+//                        $output = $dompdf->output();
+//                        dump($output);
+//
+//                        // In this case, we want to write the file in the public directory
+//                        //$publicDirectory = $this->get('kernel')->getProjectDir() . '/public';
+//                        // e.g /var/www/project/public/mypdf.pdf
+//                        $pdfFilepath =  'mypdf.pdf';
+//
+//                        // Write file to the desired path
+//                        file_put_contents($pdfFilepath, $output);
+//                        //END PDF
                     }
 
                     // Sinon, la supprimer
@@ -205,6 +246,7 @@ class TripController extends AbstractController
                         $this->addFlash('success', 'La réservation a bien été annulée.');
                     }
                     return $this->redirectToRoute('user.dashboard');
+                    //return new Response("hehe");
                 }
             }
         }
