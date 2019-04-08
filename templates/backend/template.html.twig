@@ -10,7 +10,13 @@
     <div class="container mt-4">
         <h3 class="mb-4 mt-5">{% block page_title %}{% endblock %}</h3>
 
-    {% block section %}
-    {% endblock %}
+        {% if app.user.getNbrCanceledTrip() < 3 %}
+            {% block section %}
+            {% endblock %}
+        {% else %}
+            <div class="alert alert-danger" role="alert">
+                Votre compte a été désactivé, veuillez entrer en contact avec un responssable.
+            </div>
+        {% endif %}
     </div>
 {% endblock %}

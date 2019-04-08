@@ -16,7 +16,7 @@
         <hr>
         <h4>Ma Reservation</h4>
         Vous avez reservé ce trajet le {{ reservation.getReservationDate() | date("d/m/Y à H:i", "America/New_York") }}<br>
-        <a href="{{ path('reservation.showticket', {'pub_key': reservation.getTicketPath()}) }}" class="btn btn-primary mt-2">Voir mon ticket</a>
+        <a href="{{ path('reservation.showticket', {'pub_key': reservation.getTicketPath()}) }}" class="btn btn-primary mt-2" target="_blank">Voir mon ticket</a>
         <button type="button" class="btn btn-warning mt-2" data-toggle="modal" data-target="#Modal">
             Annuler la réservation
         </button>
@@ -92,7 +92,9 @@
 {% block right_section %}
     <div style="font-size: 60px">{{ trip.getPrice() }}<span style="font-size: 15px; display: inline-grid">$<br/>la place</span></div>
     <hr>
-    {% if isConductor %}
+    {% if trip.getCanceled() %}
+        <h1 class="m-0"><span class="badge badge-danger">ANNULÉ</span></h1><br/>
+    {% elseif isConductor %}
         Voici comment votre page apparait aux yeux des autres utilisateurs<br/>
         <a href="{{ path('trip.edit', {'id': trip.getId()}) }}" class="btn btn-primary mt-3">Modifier ce trajet</a>
         <a href="{{ path('user.dashboard') }}" class="btn btn-secondary mt-3">Retour à la liste</a>
@@ -107,7 +109,7 @@
         Vous devez être connecté pour réserver.<br/>
         <a href="{{ path("login") }}" class="btn btn-primary mt-3">Connexion</a>
     {% else %}
-        Il reste des places :)
+        Il reste des places :)<br/>
         <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#Modal">
             Réserver une place
         </button>

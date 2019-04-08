@@ -423,4 +423,9 @@ class User implements UserInterface,\Serializable
     {
         return $this->firstname . " " . $this->lastname;
     }
+
+    public function newCanceledTrip()
+    {
+        $this->nbr_canceled_trip++;
+    }
 }
