@@ -32,18 +32,13 @@ class ReservationController extends AbstractController
         //TODO
         $reservation_key = $request->get('reservation_key');
         //$reservation_key = '9ac522286a381d4bdd0ded18875cf5bfcd4801ea';
-        $key = $this->getDoctrine()
+        $reservation = $this->getDoctrine()
             ->getRepository(Reservation::class)
             ->findOneBy(['reservation_key' => $reservation_key]);
-        if (!$key) {
-            $exist = false;
-        }
-        else {
-            $exist = true;
-        }
 
-        dump($exist);
-        return new Response('rien');
+        return $this->render('check_reservation.html.twig', [
+            "reservation" => $reservation
+        ]);
     }
 
     /**

@@ -1,0 +1,13 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div class="jumbotron text-center">
+        <h1 class="
+        {% if reservation %}
+            text-success"><i class="fas fa-check-circle"></i> Reservation OK <i class="fas fa-check-circle"></i></h1><br/>
+            Nom : {{ reservation.getUser().getCompletName() }}
+        {% else %}
+            text-danger"><i class="fas fa-times-circle"></i> Impossible de trouver la réservation... <i class="fas fa-times-circle"></i></h1>
+        {% endif %}
+    </div>
+{% endblock %}
