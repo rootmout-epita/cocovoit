@@ -386,7 +386,7 @@ class TripController extends AbstractController
             $prix = $trip->getPrice();
 
             //clement TODO
-            $display = null;//$this->tripRepository->findTrip($depart, $arrive, null);
+            $display = $this->tripRepository->findTrip($depart, $arrive, null);
         }
 
 
