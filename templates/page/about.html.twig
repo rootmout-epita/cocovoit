@@ -1,0 +1,35 @@
+{% extends "frontend/template.html.twig" %}
+
+{% block title %}
+    À propos {{ parent() }}
+{% endblock %}
+
+{%  block page_title %}
+    À propos
+{% endblock %}
+
+{% block section%}
+    <div class="jumbotron p-3">
+        <p style="line-height: 1.8">Cocovoit, application Web réalisée par <a href="https://www.linkedin.com/in/p-kelbert/">Pierre KELBERT</a>, <a href="http://kelbert.fr">Clément DUPLAND</a> et
+            <a href="https://www.facebook.com/hugo.diguardia">Hugo DI GUARDIA</a> en mars 2019 pour le cours <a
+                    href="https://cours.uqac.ca/8INF345">8INF345</a> - Technologies Web avancées.<br/><br/>
+            L'application a été réalisé avec le framework <a href="https://symfony.com">Symfony</a>, le générateur de templates
+            <a href="https://twig.symfony.com/doc/2.x/filters/date.html">Twig</a> ainsi que le thème CSS <a
+                    href="https://getbootstrap.com">Bootstrap</a>. Ces trois technologies ont été découvertes à l'occasion du travail précédent, EpiBanK.<br/>
+            Pour la gestion des versions du projet, un serveur git (<a href="https://about.gitlab.com">gitlab</a>) à été utilisé. <br>Le projet dans sa version de production (version publique accessible à l'adresse <kbd>lab.kelbert.fr</kbd>) est hébergé par
+            <a href="https://www.ionos.fr/?ar=1">1&1 Ionos</a> (anciennement 1&1 Internet).</p><br><hr>
+        <p class="lead">Sources</p>
+
+        Documentation:
+        <ul>
+            <li>Symfony'doc : <a href="https://symfony.com/doc/current/index.html#gsc.tab=0">Symfony Documentation</a> <span class="badge badge-primary">symfony.com</span></li>
+            <li>Bootstrap'doc : <a href="https://getbootstrap.com/docs/4.0/getting-started/introduction/">Bootstrap Documentation</a> <span class="badge badge-primary">getbootstrap.com</span></li>
+            <li>Tutoriel gestion utilisateurs : <a href="https://youtu.be/_GjHWa9hQic">SYMFONY 4/4 : 1H POUR COMPRENDRE L'AUTHENTIFICATION !</a> <span class="badge badge-primary">youtube.com</span></li>
+            <li>Tutoriel symfony : <a href="https://www.grafikart.fr/formations/symfony-4-pratique">Symfony 4 par l'exemple</a> <span class="badge badge-primary">grafikart.fr</span></li>
+        </ul>
+
+        <br/><br/>
+        <a class="btn btn-secondary" href="{{ path('page.home') }}" role="button">Retour à l'accueil</a>
+    </div>
+
+{% endblock %}
