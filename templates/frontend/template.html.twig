@@ -15,9 +15,22 @@
     </div>
 
     <div class="container-fluid d-flex justify-content-center" style="position: relative; top: -230px; padding-left: 100px; padding-right: 100px">
-        <div class="container jumbotron p-4 m-0 align-self-start" style="">
-            {% block section %}
-            {% endblock %}
+        <div class="container m-0 align-self-start">
+            {% block before_section %}{% endblock %}
+
+
+            {% if not hidde_trip_list is defined %}
+                {% set hidde_trip_list = false %}
+            {% endif %}
+
+            {% if not hidde_trip_list %}
+                <div class="jumbotron p-4" style="">
+
+                        {% block section %}
+                        {% endblock %}
+
+                </div>
+            {% endif %}
         </div>
         {% if app.request.attributes.get('_route') == "trip.view" %}
         <div class="container jumbotron p-4 m-0 ml-4 text-center align-self-start" style="width: 250px; min-height: 300px">
