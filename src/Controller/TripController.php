@@ -369,17 +369,31 @@ class TripController extends AbstractController
      *
      * @author cldupland
      */
-    public function search() : Response //$depart, $arrive, $dateDepart
+    public function search(Request $request) : Response //$depart, $arrive, $dateDepart
     {
-        if ($this->tripRepository == null){
-            $this->tripRepository = $this->getDoctrine()->getRepository(Trip::class);
+        $submited = false;
+        $trip = new Trip();
+        $trip->setNbrPlaces(1);
+        $trip->setDuration(date_create("1:00"));
+        $form = $this->createForm(TripType::class, $trip);
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            $submited = true;
         }
+
+
+        //if ($this->tripRepository == null){
+          //  $this->tripRepository = $this->getDoctrine()->getRepository(Trip::class);
+        //}
         $depart = "Paris";
         $arrive ="Lille";
 
-        $display = $this->tripRepository->findTrip($depart, $arrive, null);
-        dump($display);
+        $display = null;//$this->tripRepository->findTrip($depart, $arrive, null);
 
-        return new Response('');
+        return $this->render('frontend/search.html.twig', [
+            "form" => $form->createView(),
+            "trips" => $display,
+            "hidde_trip_list" => !$submited
+        ]);
     }
 }
