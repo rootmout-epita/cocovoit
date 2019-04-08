@@ -6,7 +6,8 @@
 {% endblock %}
 
 {%  block page_title %}
-    {{ trip.getDeparturePlace() }} &nbsp;<i class="fas fa-arrow-circle-right"></i>&nbsp; {{ trip.getArrivalPlace() }}
+    {{ trip.getDeparturePlace() }} &nbsp;<i class="fas fa-arrow-circle-right"></i>&nbsp; {{ trip.getArrivalPlace() }}  &nbsp;
+    <a href="{{ path('trip.list') }}" class="btn btn-outline-light">Retour</a>
 {% endblock %}
 
 {% block section%}
@@ -104,7 +105,7 @@
             Annuler la réservation
         </button>
     {% elseif trip.remainingPlaces() <= 0 %}
-        <p class="text-danger">Trajet Complet</p>
+        <br/><p style="color: #ff645f">COMPLET</p>
     {% elseif not app.user %}
         Vous devez être connecté pour réserver.<br/>
         <a href="{{ path("login") }}" class="btn btn-primary mt-3">Connexion</a>

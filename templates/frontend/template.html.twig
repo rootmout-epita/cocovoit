@@ -3,23 +3,35 @@
 
 {% block content%}
 
-    <div class="container-fluid" style="background-color: #AA3333; height: 350px; padding-left: 100px; padding-right: 100px; padding-top: 40px;">
-        <div>
+    <div class="container-fluid d-flex flex-row" style="background-image: url('{{ asset('/resources/images/wallpaper_1.png') }}'); height: 350px; padding-left: 100px; padding-right: 100px; padding-top: 40px;     background-position: top;
+            background-size: cover;">
+        <div class="container">
             <h2 class="h2 text-light">{% block page_title %}{% endblock %}</h2>
         </div>
+        {% if app.request.attributes.get('_route') == "trip.view" %}
+            <div class="container p-4 m-0 ml-4 text-center align-self-start" style="width: 250px" >
+            </div>
+        {% endif %}
     </div>
 
-    <div class="container-fluid d-flex flex-row" style="position: relative; top: -230px; padding-left: 100px; padding-right: 100px">
-        <div class="container p-4 align-self-start" style="background-color: #5eb5e0;">
+    <div class="container-fluid d-flex justify-content-center" style="position: relative; top: -230px; padding-left: 100px; padding-right: 100px">
+        <div class="container jumbotron p-4 m-0 align-self-start" style="">
             {% block section %}
             {% endblock %}
         </div>
         {% if app.request.attributes.get('_route') == "trip.view" %}
-        <div class="container p-4 w-25 ml-3 text-center align-self-start" style="background-color: #5eb5e0;">
+        <div class="container jumbotron p-4 m-0 ml-4 text-center align-self-start" style="width: 250px; min-height: 300px">
             {% block right_section %}
             {% endblock %}
         </div>
         {% endif %}
     </div>
+
+    <style>
+        body
+        {
+            background-color: #43625d;
+        }
+    </style>
 
 {% endblock %}

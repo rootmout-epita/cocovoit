@@ -24,15 +24,15 @@
             </div>
 
             <div class="flex-fill row">
-                <div class="my-auto" style="font-size: 20px">
+                <div class="my-auto text-center" style="font-size: 20px">
                     {% if trip.getCanceled %}
                         <span class="badge badge-danger">ANNULÉ</span>
                     {% elseif trip.remainingPlaces() == 0 %}
-                        <span style="color: #d72e29">COMPLET</span>
+                        <span style="color: #ff645f">COMPLET</span>
                     {% elseif trip.remainingPlaces() == 1%}
-                        <span style="color: #96e228">Plus qu'une place !</span>
+                        <span style="color: #86c81b">Plus qu'une place !</span>
                     {% else%}
-                        <span style="color: #96e228">{{ trip.remainingPlaces() }} places</br>disponibles</span>
+                        <span style="color: #86c81b">{{ trip.remainingPlaces() }} places</br>disponibles</span>
                     {% endif %}
                 </div>
             </div>
@@ -43,7 +43,7 @@
 
 
             <div class="row">
-                <a href="{{ path('trip.view', {'id': trip.getId()}) }}" class="btn btn-primary my-auto">En savoir +</a>
+                <a href="{{ path('trip.view', {'id': trip.getId()}) }}" class="btn btn-primary my-auto">En savoir <i class="fas fa-plus-circle"></i></a>
             </div>
         </div>
     </div>
