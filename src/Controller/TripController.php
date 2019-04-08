@@ -367,7 +367,7 @@ class TripController extends AbstractController
      *
      * @return Response
      *
-     * @author cldupland
+     * @author cldupland & pkelbert
      */
     public function search(Request $request) : Response //$depart, $arrive, $dateDepart
     {
@@ -379,16 +379,15 @@ class TripController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             $submited = true;
+
+            $depart = $trip->getDeparturePlace();
+            $arrive = $trip->getArrivalPlace();
+            $prix = $trip->getPrice();
+
+            //clement TODO
+            $display = null;//$this->tripRepository->findTrip($depart, $arrive, null);
         }
 
-
-        //if ($this->tripRepository == null){
-          //  $this->tripRepository = $this->getDoctrine()->getRepository(Trip::class);
-        //}
-        $depart = "Paris";
-        $arrive ="Lille";
-
-        $display = null;//$this->tripRepository->findTrip($depart, $arrive, null);
 
         return $this->render('frontend/search.html.twig', [
             "form" => $form->createView(),
