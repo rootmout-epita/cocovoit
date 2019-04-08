@@ -29,7 +29,6 @@ class PageController extends AbstractController
      */
     public function about()
     {
-        //TODO
-        return new Response("salut hugo");
+        return $this->render('page/about.html.twig');
     }
 }
