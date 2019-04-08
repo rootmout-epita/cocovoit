@@ -38,8 +38,8 @@ class TripRepository extends ServiceEntityRepository
      */
     public function findTrip($depart, $arrive, $dateDepart) : array {
         return $this->createQueryBuilder('t')
-            ->where("t.departure_place = '$depart'")
-            ->andWhere("t.arrival_place = '$arrive'")
+            ->where("t.departure_place LIKE '$depart%'")
+            ->andWhere("t.arrival_place LIKE '$arrive%'")
 //            ->where("t.departure_schedule = $dateDepart")
             ->andWhere("t.nbr_places > 0")
             ->getQuery()
