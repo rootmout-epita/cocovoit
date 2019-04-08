@@ -29,9 +29,9 @@ class ReservationController extends AbstractController
      */
     public function check(Request $request)
     {
-        //TODO
+        //Get the reservation key from the url
         $reservation_key = $request->get('reservation_key');
-        //$reservation_key = '9ac522286a381d4bdd0ded18875cf5bfcd4801ea';
+
         $reservation = $this->getDoctrine()
             ->getRepository(Reservation::class)
             ->findOneBy(['reservation_key' => $reservation_key]);
@@ -43,6 +43,14 @@ class ReservationController extends AbstractController
 
     /**
      * @Route("/showticket/pk={pub_key}", name="reservation.showticket")
+     *
+     * Display the ticket's QR code.
+     *
+     * @param String $pub_key : the ticket's path
+     *
+     * @return Response
+     *
+     * @author pkelbert
      */
     public function showTicket(string $pub_key)
     {
