@@ -357,7 +357,7 @@ class TripController extends AbstractController
 
 
     /**
-     * @Route("/search")
+     * @Route("/search", name="trip.search")
      *
      * @param string $depart : Lieu de départ du voyage
      * @param string $arrive : Lieu d'arriver du voyage
@@ -371,6 +371,7 @@ class TripController extends AbstractController
      */
     public function search(Request $request) : Response //$depart, $arrive, $dateDepart
     {
+        $display = null;
         $submited = false;
         $trip = new Trip();
         $trip->setNbrPlaces(1);
