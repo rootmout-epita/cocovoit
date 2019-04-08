@@ -23,6 +23,10 @@ class UserController extends AbstractController
      *
      * @Route("/login", name="login")
      *
+     * @param AuthenticationUtils $authenticationUtils : Used to get the last username
+     *
+     * @return Response
+     *
      * @author cldupland
      */
     public function login(AuthenticationUtils $authenticationUtils)
@@ -40,6 +44,14 @@ class UserController extends AbstractController
      * Registration form.
      *
      * @Route("/register", name="user.registration")
+     *
+     * @param Request $request : the request sent by the user
+     *
+     * @param ObjectManager $manager : used to register the new user in the database
+     *
+     * @param UserPasswordEncoderInterface $encoder : used to hash the password the user entered
+     *
+     * @return Response
      *
      * @author hdiguardia
      */
@@ -69,15 +81,23 @@ class UserController extends AbstractController
 
 
     /**
-     * Enable user to change his personnal informations
+     * Enable user to change his personnal informations.
      *
      * @Route("/edit", name="user.edit")
+     *
+     * @param Request $request : the request sent by the user
+     *
+     * @param ObjectManager $manager : used to register the new user in the database
+     *
+     * @param UserPasswordEncoderInterface $encoder : used to hash the password the user entered
+     *
+     * @return Response
      *
      * @author hdiguardia
      */
     public function edit(Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder)
     {
-        //TODO : Ne s'occupe pas encore des préférences utilisateurs!
+        // Get the user connected right now
         $user = $this->getUser();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
@@ -98,7 +118,7 @@ class UserController extends AbstractController
     }
 
 
-    /** NOT USED FOR MOMENT
+    /** NOT USED
      * Enable user to delete his account
      *
      * @Route("/edit/admin", name="user.delete")
@@ -134,11 +154,13 @@ class UserController extends AbstractController
      *
      * @Route("/dashboard", name="user.dashboard")
      *
+     * @return Response
+     *
      * @author cldupland
      */
     public function dashboard()
     {
-        //TODO retourne à la vue une liste avec toutes les reservations.
+        // Return to the view a list with all the reservations
 
         return $this->render('backend/dashboard.html.twig', [
             "reservations" => $this
@@ -160,7 +182,7 @@ class UserController extends AbstractController
      *
      * @Route("/user_page/{id}", name="user.public_page")
      *
-     * @return Reponse
+     * @return Response
      *
      * @author cldupland
      */
@@ -171,8 +193,6 @@ class UserController extends AbstractController
         }
 
         $user = $this->userRepository->findOneBy(['id' => $id]);
-
-        //dump($this->getUser()->getId());
 
         return $this->render('frontend/user_page.html.twig',[
             "user" => $user,
