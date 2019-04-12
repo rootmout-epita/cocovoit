@@ -30,7 +30,7 @@ class MailConfirmation
     {
         try {
             $message = (new \Swift_Message('Confirmation E-Mail'))
-                ->setFrom('confirm@lab.kelbert.fr')
+                ->setFrom('noreply-cocovoit@lab.kelbert.fr')
                 ->setTo($checker->getMail())
                 ->setBody(
                     $this->twig->render('mail/confirmMail.html.twig', [
