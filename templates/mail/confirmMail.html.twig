@@ -20,7 +20,7 @@
     <tr>
 
         <td>Bonjour {{ checker.getUser().getCompletName() }}, veuillez confirmer votre adresse mail :<br/>
-            <a href="http://localhost:8888/checkmail/{{ checker.getCheckKey }}">CONFIRMER</a><br/><br/></td>
+            <a href="{{ url('mail_check', {'mailkey': checker.getCheckKey}) }}">CONFIRMER</a><br/><br/></td>
 
     </tr>
 
