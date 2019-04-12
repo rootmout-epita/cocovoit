@@ -17,7 +17,7 @@ class EmailChecker
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\User", inversedBy="emailChecker", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\User", inversedBy="emailChecker", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;

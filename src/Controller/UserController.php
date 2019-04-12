@@ -6,6 +6,7 @@ use App\Entity\EmailChecker;
 use App\Entity\Reservation;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Services\MailConfirmation;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -73,7 +74,7 @@ class UserController extends AbstractController
      *
      * @author hdiguardia
      */
-    public function register(Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder) {
+    public function register(Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder, MailConfirmation $confirmation) {
 
         $user = new User();
 
@@ -95,6 +96,8 @@ class UserController extends AbstractController
             $manager->persist($user);
             $manager->persist($emailVerification);
             $manager->flush();
+
+            $confirmation->sendMail($emailVerification);
 
             $this->addFlash('success', 'Votre compte à bien été crée, veuillez vérifier votre boite e-mail pour confirmer.');
             return $this->redirectToRoute('login');
