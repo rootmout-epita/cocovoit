@@ -11,7 +11,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 class EmailController extends AbstractController
 {
     /**
-     * @Route("/checkmail/{mailkey}")
+     * @Route("/checkmail/{mailkey}", name="mail_check")
      * @param string $mailkey
      * @return \Symfony\Component\HttpFoundation\Response
      */
