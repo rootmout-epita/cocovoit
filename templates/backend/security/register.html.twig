@@ -37,13 +37,13 @@
                 <div class="">
                     {{ form_row(form.address, {'label': ' ','attr': {placeholder: 'Adresse'}}) }}
                 </div>
-                {#<div class="">
-                    {{ form_row(form.confirm_password, {'label': ' ','attr': {placeholder: 'Confirmation mot de passe'}}) }}
-                    <small id="emailHelp" class="form-text text-muted text-left">Doit être identique au mot de passe</small>
-                </div>#}
                 <div class="">
                     {{ form_row(form.password, {'label': ' ','attr': {placeholder: 'Mot de passe'}}) }}
                     <small id="mdpHelp" class="form-text text-muted text-left">Doit être composé d'au minimum 8 caractères</small>
+                </div>
+                <div class="">
+                    {{ form_row(form.confirm_password, {'label': ' ','attr': {placeholder: 'Confirmation mot de passe'}}) }}
+                    <small id="emailHelp" class="form-text text-muted text-left">Doit être identique au mot de passe</small>
                 </div>
             </div>
             <br/>
