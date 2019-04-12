@@ -37,30 +37,9 @@ class PageController extends AbstractController
      * @param \Swift_Mailer $mailer
      * @return Response
      */
-    public function mailtest(\Swift_Mailer $mailer)
+    public function mailtest()
     {
-        $message = (new \Swift_Message('Hello Email'))
-            ->setFrom('test@lab.kelbert.fr')
-            ->setTo('pierre.kelbert@gmail.com')
-            ->setBody(
-                "salut",
-                'text/html'
-            )
-            /*
-             * If you also want to include a plaintext version of the message
-            ->addPart(
-                $this->renderView(
-                    'emails/registration.txt.twig',
-                    ['name' => $name]
-                ),
-                'text/plain'
-            )
-            */
-        ;
-
-        $mailer->send($message);
-
-        return new Response("test");
+        return $this->render('mail/confirmMail.html.twig');
     }
 
 }

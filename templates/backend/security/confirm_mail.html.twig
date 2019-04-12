@@ -1,0 +1,25 @@
+{% extends 'template.html.twig' %}
+
+{% block title 'Confirmation E-mail' %}
+
+{% block navbar_right %}
+{% endblock %}
+
+{% block content %}
+    <div class="container text-center">
+        <div class="jumbotron ml-auto mr-auto mt-5" style="width: 400px">
+            {% if confirmed %}
+                <div class="alert alert-success">
+                    Félicitations: l'adresse {{ email }} a été confirmée avec succès !
+                </div>
+            {% else %}
+                <div class="alert alert-danger">
+                    Une erreur est survenue, veuillez réessayer.
+                </div>
+            {% endif %}
+
+            <a href="{{ path('login') }}" class="btn btn-primary">Se connecter</a>
+        </div>
+    </div>
+
+{% endblock %}
