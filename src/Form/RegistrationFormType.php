@@ -22,6 +22,7 @@ class RegistrationFormType extends AbstractType
             ->add('phone')
             ->add('address')
             ->add('password', PasswordType::class)
+            ->add('confirm_password', PasswordType::class)
         ;
     }
 
