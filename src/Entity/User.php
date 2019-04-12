@@ -90,6 +90,11 @@ class User implements UserInterface,\Serializable
      */
     private $feedbacks;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\EmailChecker", mappedBy="user")
+     */
+    private $emailChecker;
+
     public function __construct()
     {
         $this->trips = new ArrayCollection();

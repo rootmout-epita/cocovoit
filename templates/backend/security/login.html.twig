@@ -10,10 +10,16 @@
         <div class="jumbotron ml-auto mr-auto mt-5" style="width: 400px">
             <h1>Connexion</h1>
             <p>On se connait ?</p>
+            {% include "backend/_flashmessage.html.twig" %}
             <hr class="my-4">
             {% if error %}
                 <div class="alert alert-danger">
                     {{ error.messageKey | trans(error.messageData, 'security') }}
+                </div>
+            {% endif %}
+            {% if hey %}
+                <div class="alert alert-danger">
+                    {{ hey }}
                 </div>
             {% endif %}
             <div class="container text-center">
