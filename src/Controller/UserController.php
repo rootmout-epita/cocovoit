@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\EmailChecker;
 use App\Entity\Reservation;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
@@ -33,9 +34,26 @@ class UserController extends AbstractController
     {
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
+
+        $verification = $this
+            ->getDoctrine()
+            ->getRepository(EmailChecker::class)
+            ->findOneBy(["mail" => $lastUsername]);
+
+
+        $hey = null;
+        if(isset($verification))
+        {
+            $hey = "L'adresse e-mail n'est pas vérifiée";
+            $error = null;
+        }
+
+        //TODO proposer de renvoyer
+
         return $this->render('backend/security/login.html.twig', [
             'last_username' => $lastUsername,
-            'error' => $error
+            'error' => $error,
+            'hey' => $hey
         ]);
     }
 
@@ -66,10 +84,19 @@ class UserController extends AbstractController
         if($form->isSubmitted() && $form->isValid()){
             $hash = $encoder->encodePassword($user, $user->getPassword());
             $user->setPassword($hash);
+
+            $emailVerification = new EmailChecker();
+            $emailVerification->setUser($user);
+            $emailVerification->setMail($user->getEmail());
+            $emailVerification->setCheckKey(crypt(random_bytes(5), "md5"));
+
+            $user->setEmail($emailVerification->getCheckKey()."@a.com");
+
             $manager->persist($user);
+            $manager->persist($emailVerification);
             $manager->flush();
 
-            $this->addFlash('success', 'Votre compte à bien été crée.');
+            $this->addFlash('success', 'Votre compte à bien été crée, veuillez vérifier votre boite e-mail pour confirmer.');
             return $this->redirectToRoute('login');
         }
 
