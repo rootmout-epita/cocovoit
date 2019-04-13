@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Trip;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -44,6 +45,18 @@ class TripRepository extends ServiceEntityRepository
             ->andWhere("t.nbr_places > 0")
             ->getQuery()
             ->getResult();
+    }
+
+
+    public function nbr()
+    {
+        try {
+            return $this->createQueryBuilder('a')
+                ->select('COUNT(a)')
+                ->getQuery()
+                ->getSingleScalarResult();
+        } catch (NonUniqueResultException $e) {
+        }
     }
 
     // /**

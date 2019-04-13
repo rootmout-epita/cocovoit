@@ -17,11 +17,15 @@ class TripType extends AbstractType
         $builder
             ->add('departure_place')
             ->add('arrival_place')
-            ->add('departure_schedule', TextType::class, array(
-
-                'attr' => ['class' => 'js-datepicker'],
-
-            ))
+            ->add('departure_schedule', DateTimeType::class, [
+                'view_timezone' => 'America/New_York',
+                'widget' => 'choice',
+                'years' => range(date('Y'), date('Y')+3),
+                'date_format' => 'd MMMM y',
+                'attr' => [
+                    "class" => ""
+                ]
+            ])
             ->add('duration', TimeType::class)
             ->add('nbr_places')
             ->add('price')
