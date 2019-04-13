@@ -62,7 +62,7 @@ class ReservationController extends AbstractController
         $default_path = "http://lab.kelbert.fr/reservation/check/";
 
         return $this->render('ticket.pdf.twig',[
-            "key" => $default_path . $reservation->getReservationKey()
+            "key" => $reservation->getReservationKey()
         ]);
     }
 }
