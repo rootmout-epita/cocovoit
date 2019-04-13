@@ -88,7 +88,7 @@ class Trip
 
     public function setDeparturePlace(string $departure_place): self
     {
-        $this->departure_place = $departure_place;
+        $this->departure_place = ucfirst(strtolower($departure_place));
 
         return $this;
     }
@@ -100,7 +100,7 @@ class Trip
 
     public function setArrivalPlace(string $arrival_place): self
     {
-        $this->arrival_place = $arrival_place;
+        $this->arrival_place = ucfirst(strtolower($arrival_place));
 
         return $this;
     }
