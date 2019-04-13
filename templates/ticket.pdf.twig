@@ -1,1 +1,1 @@
-<img src="{{ qr_code_data_uri(key, { writer: 'svg', size: 250 }) }}" />
+<img src="{{ qr_code_data_uri(url('reservation.check', {'reservation_key':key}), { writer: 'svg', size: 250 }) }}" />
