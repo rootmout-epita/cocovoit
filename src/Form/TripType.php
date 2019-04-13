@@ -4,6 +4,9 @@ namespace App\Form;
 
 use App\Entity\Trip;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -14,8 +17,12 @@ class TripType extends AbstractType
         $builder
             ->add('departure_place')
             ->add('arrival_place')
-            ->add('departure_schedule')
-            ->add('duration')
+            ->add('departure_schedule', TextType::class, array(
+
+                'attr' => ['class' => 'js-datepicker'],
+
+            ))
+            ->add('duration', TimeType::class)
             ->add('nbr_places')
             ->add('price')
         ;
