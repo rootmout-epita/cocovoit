@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Trip;
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,10 +17,20 @@ class PageController extends AbstractController
      */
     public function index()
     {
-        //TODO
+        $users= $this
+            ->getDoctrine()
+            ->getRepository(User::class)
+            ->nbr();
 
-        return $this->render('page/home.html.twig');
-        return new Response("<body>Ceci est la page d'accueil</body>");
+        $trips = $this
+            ->getDoctrine()
+            ->getRepository(Trip::class)
+            ->nbr();
+
+        return $this->render('page/home.html.twig',[
+            "nbr_user" => $users,
+            "nbr_trip" => $trips
+        ]);
     }
 
 

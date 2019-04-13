@@ -10,14 +10,26 @@
 
 {% block section%}
     <div class="jumbotron p-3">
+        <div class="alert alert-primary d-flex" role="alert">
+            <div class="align-self-center mb-0 mr-3"><i class="fas h3 m-0 fa-file-code"></i></div>
+            <div><strong>[13/04/19] - Projet en développement lent.</strong><br>
+                Projet scolaire évalué, mais dont le développement est poursuivi (de manière lente) pour "manipuler".</div>
+        </div>
         <p style="line-height: 1.8">Cocovoit, application Web réalisée par <a href="https://www.linkedin.com/in/p-kelbert/">Pierre KELBERT</a>, <a href="http://kelbert.fr">Clément DUPLAND</a> et
             <a href="https://www.facebook.com/hugo.diguardia">Hugo DI GUARDIA</a> en mars 2019 pour le cours <a
                     href="https://cours.uqac.ca/8INF345">8INF345</a> - Technologies Web avancées.<br/><br/>
+
             L'application a été réalisé avec le framework <a href="https://symfony.com">Symfony</a>, le générateur de templates
             <a href="https://twig.symfony.com/doc/2.x/filters/date.html">Twig</a> ainsi que le thème CSS <a
                     href="https://getbootstrap.com">Bootstrap</a>. Ces trois technologies ont été découvertes à l'occasion du travail précédent, EpiBanK.<br/>
-            Pour la gestion des versions du projet, un serveur git (<a href="https://about.gitlab.com">gitlab</a>) à été utilisé. <br>Le projet dans sa version de production (version publique accessible à l'adresse <kbd>lab.kelbert.fr</kbd>) est hébergé par
-            <a href="https://www.ionos.fr/?ar=1">1&1 Ionos</a> (anciennement 1&1 Internet).</p><br><hr>
+            Pour la gestion des versions du projet, un serveur git (<a href="https://about.gitlab.com">gitlab</a>) à été utilisé. <br>Le projet est déployé en production sur le domaine <strong>lab.kelbert.fr</strong> et est de ce fait hébergé sur un VPS de chez
+            <a href="https://ovh.com">OVH</a>.</p><br><hr>
+
+        <p class="lead">Sécurité</p>
+        <p>Les données (BDD) sont hébergées en local sur le VPS et <strong>tous les mots de passes sont cryptés</strong>, l'administrateur lui-même ne peut donc pas les récupérer. Connexion HTTPS, certificat LETS'ENCRYPT.</p>
+
+        <br><hr>
+
         <p class="lead">Sources</p>
 
         Documentation:

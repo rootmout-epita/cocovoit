@@ -8,8 +8,46 @@
 
 {% block section %}
     {{ form_start(form) }}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2">
+                {{ form_row(form.firstname, {'label': 'Prénom','attr': {placeholder: ''}}) }}
+            </div>
+            <div class="col-md-2">
+                {{ form_row(form.lastname, {'label': 'Nom','attr': {placeholder: ''}}) }}
+            </div>
+            <div class="col-md-4">
+                {{ form_row(form.email, {'label': 'E-Mail','attr': {readonly:""}}) }}
+                <small id="emailHelp" class="form-text text-muted text-left">Cocovoit ne permet pas d'éditer l'e-mail pour le moment</small>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-2">
+                {{ form_row(form.phone, {'label': 'Téléphone','attr':{}}) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(form.address, {'label': 'Adresse','attr':{}}) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                {{ form_row(form.password, {'label': 'Mot de passe','attr':{}}) }}
+            </div>
+            <div class="col-md-3">
+                {{ form_row(form.confirm_password, {'label': 'Confirmez le mot de passe','attr':{}}) }}
+            </div>
+        </div>
+
+        <div class="row">
+
+        </div>
+
+    </div>
+    <br/>
     {{ form_widget(form) }}
-    <div class="row-fluid">
     <a href="{{ path('user.dashboard') }}" class="btn btn-primary">Retour</a>
     <button type="submit" class="btn btn-success">Valider</button>
     {{ form_end(form) }}
