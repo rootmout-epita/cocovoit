@@ -265,6 +265,11 @@ class TripController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if($trip->getDepartureSchedule() < new \DateTime())
+            {
+                $this->addFlash('error', 'Attention Marty, tu tente de retourner dans le passé !');
+                return $this->redirectToRoute("user.dashboard");
+            }
             $trip->setConductor($this->getUser());
             $this->em->persist($trip);
             $this->em->flush();
@@ -304,6 +309,11 @@ class TripController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
+            if($selectedTrip->getDepartureSchedule() < new \DateTime())
+            {
+                $this->addFlash('error', 'Attention Marty, tu tente de retourner dans le passé !');
+                return $this->redirectToRoute("user.dashboard");
+            }
             $this->em->flush();
             $this->addFlash('success', 'Votre trajet à bien été modifié.');
             return $this->redirectToRoute("user.dashboard");

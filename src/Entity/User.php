@@ -202,7 +202,7 @@ class User implements UserInterface,\Serializable
 
     public function setFirstname(string $firstname): self
     {
-        $this->firstname = $firstname;
+        $this->firstname = ucfirst(strtolower($firstname));
 
         return $this;
     }
@@ -214,7 +214,7 @@ class User implements UserInterface,\Serializable
 
     public function setLastname(string $lastname): self
     {
-        $this->lastname = $lastname;
+        $this->lastname = ucfirst(strtolower($lastname));
 
         return $this;
     }
