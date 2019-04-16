@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\EmailChecker;
 use App\Entity\Trip;
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -62,6 +63,24 @@ class PageController extends AbstractController
         $mailer->send($message);
 
         return new Response("hello");
+    }
+
+    /**
+     * @Route("/rendermail")
+     * @return Response
+     */
+    public function mailRenderTest(){
+
+        $checker = new EmailChecker();
+        $checker->setCheckKey("abc");
+        $user = new User();
+        $user->setFirstname("Pierre");
+        $user->setLastname("TEST");
+        $checker->setUser($user);
+
+        return $this->render('mail/confirmMail.html.twig', [
+            "checker" => $checker
+        ]);
     }
 
 }
