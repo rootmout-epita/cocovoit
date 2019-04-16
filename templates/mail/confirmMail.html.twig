@@ -1,6 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Un Email Responsive</title>
     <style type="text/css">
@@ -9,27 +11,17 @@
     </style>
 </head>
 <body>
-<table>
+<div class="mt-5">
+    <img src="{{ app.request.getSchemeAndHttpHost() ~ asset('resources/images/main.png')}}" class="ml-auto mr-auto mb-3" width="200px">
+    <div class="card border-primary ml-auto mr-auto" style="max-width: 28rem;">
+        <div class="card-header text-primary">Confirmer l'adresse e-mail</div>
+        <div class="card-body">
+            <p class="card-text"><strong>{{ checker.getUser().getCompletName() }}</strong>, merci de confirmer votre adresse e-mail avec le lien ci-dessous pour poursuivre sur le site cocovoit:</p>
+            <a href="{{ url('mail_check', {'mailkey': checker.getCheckKey}) }}" class="btn btn-primary">confirmer <strong>{{ checker.getMail() }}</strong></a><br/><br/>... et bienvenue chez cocovoit (•‿•) !
+        </div>
+    </div>
+</div>
 
-    <tr>
 
-        COCOVOIT
-
-    </tr>
-
-    <tr>
-
-        <td>Bonjour {{ checker.getUser().getCompletName() }}, veuillez confirmer votre adresse mail :<br/>
-            <a href="{{ url('mail_check', {'mailkey': checker.getCheckKey}) }}">CONFIRMER</a><br/><br/></td>
-
-    </tr>
-
-    <tr>
-
-        <td align="center">Cocovoit</td>
-
-    </tr>
-
-</table>
 </body>
 </html>
