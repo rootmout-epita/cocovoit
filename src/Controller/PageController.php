@@ -73,6 +73,7 @@ class PageController extends AbstractController
 
         $checker = new EmailChecker();
         $checker->setCheckKey("abc");
+        $checker->setMail("pierre.kelbert@gmail.com");
         $user = new User();
         $user->setFirstname("Pierre");
         $user->setLastname("TEST");
