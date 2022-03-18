@@ -7,7 +7,7 @@ use App\Entity\Trip;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 
 class ReservationFixtures extends Fixture implements DependentFixtureInterface
 {

@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\EmailChecker;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 
 class EmailController extends AbstractController
 {
@@ -15,7 +15,7 @@ class EmailController extends AbstractController
      * @param string $mailkey
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function checkEmail(string $mailkey, ObjectManager $manager)
+    public function checkEmail(string $mailkey, EntityManagerInterface $manager)
     {
         /** @var \App\Entity\EmailChecker $checker */
         $checker = $this

@@ -6,7 +6,7 @@ use App\Entity\Preference;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 
 class UserPreferenceFixtures extends Fixture
 {

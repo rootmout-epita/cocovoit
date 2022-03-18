@@ -28,7 +28,6 @@ class MailConfirmation
 
     public function sendMail(EmailChecker $checker)
     {
-        try {
             $message = (new \Swift_Message('Confirmation E-Mail'))
                 ->setFrom('noreply-cocovoit@lab.kelbert.fr')
                 ->setTo($checker->getMail())
@@ -38,10 +37,6 @@ class MailConfirmation
                     ]),
                     'text/html'
                 );
-        } catch (LoaderError $e) {
-        } catch (RuntimeError $e) {
-        } catch (SyntaxError $e) {
-        }
 
         $this->mailer->send($message);
     }
