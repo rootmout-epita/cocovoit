@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserController extends AbstractController
@@ -66,7 +66,7 @@ class UserController extends AbstractController
      *
      * @param Request $request : the request sent by the user
      *
-     * @param ObjectManager $manager : used to register the new user in the database
+     * @param EntityManagerInterface $manager : used to register the new user in the database
      *
      * @param UserPasswordEncoderInterface $encoder : used to hash the password the user entered
      *
@@ -74,7 +74,7 @@ class UserController extends AbstractController
      *
      * @author hdiguardia
      */
-    public function register(Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder, MailConfirmation $confirmation) {
+    public function register(Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder, MailConfirmation $confirmation) {
 
         $user = new User();
 
@@ -117,7 +117,7 @@ class UserController extends AbstractController
      *
      * @param Request $request : the request sent by the user
      *
-     * @param ObjectManager $manager : used to register the new user in the database
+     * @param EntityManagerInterface $manager : used to register the new user in the database
      *
      * @param UserPasswordEncoderInterface $encoder : used to hash the password the user entered
      *
@@ -125,7 +125,7 @@ class UserController extends AbstractController
      *
      * @author hdiguardia
      */
-    public function edit(Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder)
+    public function edit(Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder)
     {
         // Get the user connected right now
         $user = $this->getUser();
