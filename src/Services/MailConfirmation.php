@@ -26,10 +26,10 @@ class MailConfirmation
         $this->mailer = $mailer;
     }
 
-    public function sendMail(EmailChecker $checker)
+    public function sendMail(EmailChecker $checker, string $sender_address)
     {
             $message = (new \Swift_Message('Confirmation E-Mail'))
-                ->setFrom('noreply-cocovoit@lab.kelbert.fr')
+                ->setFrom($sender_address)
                 ->setTo($checker->getMail())
                 ->setBody(
                     $this->twig->render('mail/confirmMail.html.twig', [
