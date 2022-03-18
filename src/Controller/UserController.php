@@ -97,7 +97,8 @@ class UserController extends AbstractController
             $manager->persist($emailVerification);
             $manager->flush();
 
-            $confirmation->sendMail($emailVerification);
+            $sender_address = $this->getParameter('app.sender_address');
+            $confirmation->sendMail($emailVerification, $sender_address);
 
             $this->addFlash('success', 'Votre compte à bien été crée, veuillez vérifier votre boite e-mail pour confirmer.');
             return $this->redirectToRoute('login');

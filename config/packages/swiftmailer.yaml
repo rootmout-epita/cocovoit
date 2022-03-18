@@ -1,11 +1,10 @@
 swiftmailer:
-    #url: '%env(MAILER_URL)%'
     transport: smtp
-    host: 'smtp.ionos.fr'
-    port: '587'
-    username: 'noreply-cocovoit@lab.kelbert.fr'
-    password: 'Qn7KTnfWekX9iaS'
-    encryption: tls
+    host: '%env(resolve:MAIL_HOST)%'
+    port: '%env(resolve:MAIL_PORT)%'
+    username: '%env(resolve:MAIL_USERNAME)%'
+    password: '%env(resolve:MAIL_PASSWORD)%'
+    encryption: '%env(resolve:MAIL_ENCRYPTION)%'
     auth_mode: login
 
     spool: { type: 'memory' }
