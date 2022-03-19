@@ -17,6 +17,8 @@ COPY . /var/www
 
 WORKDIR /var/www
 
+RUN composer install
+
 EXPOSE 80/tcp
 
 CMD ["apache2-foreground"]
