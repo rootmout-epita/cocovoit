@@ -89,7 +89,7 @@ class UserController extends AbstractController
             $emailVerification = new EmailChecker();
             $emailVerification->setUser($user);
             $emailVerification->setMail($user->getEmail());
-            $emailVerification->setCheckKey(crypt(random_bytes(5), "md5"));
+            $emailVerification->setCheckKey(random_int(100000000, 9999999999));
 
             $user->setEmail($emailVerification->getCheckKey()."@a.com");
 
