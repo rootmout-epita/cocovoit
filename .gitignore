@@ -122,9 +122,7 @@
 # Embedded web-server pid file
 /.web-server-pid
 
-.idea/*
-
-.env
+.idea/
 
 sync_git.php
 
