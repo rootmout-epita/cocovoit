@@ -19,6 +19,10 @@ Mail:
 - `MAIL_ENCRYPTION` encryption type (eg: 'tls')
 - `MAIL_SENDER_ADDRESS` mail from field
 
+Symfony:
+- `APP_ENV` should be 'prod' or 'dev'
+- `APP_SECRET` random string "used to add more entropy to security related operations". See [symfony doc](https://symfony.com/doc/current/reference/configuration/framework.html#secret)
+
 ## Credentials
 
 [Pierre KELBERT](https://github.com/rootmout), [Clément DUPLAND](https://www.linkedin.com/in/cldupland/), [Hugo DI GUARDIA](https://www.linkedin.com/in/hdiguardia/)
