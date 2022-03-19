@@ -15,7 +15,8 @@ docker-build:
   # Default branch leaves tag empty (= latest tag)
   # All other branches are tagged with the escaped branch name (commit ref slug)
   script:
-    - tag="$CI_COMMIT_TAG"
+    - tag=":$CI_COMMIT_TAG"
+    - echo "start building image $CI_REGISTRY_IMAGE${tag}"
     - docker build --pull -t "$CI_REGISTRY_IMAGE${tag}" .
     - docker push "$CI_REGISTRY_IMAGE${tag}"
   # Run this job in a branch where a Dockerfile exists
